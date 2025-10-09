@@ -4,6 +4,9 @@ import argparse
 from pathlib import Path
 import socket
 import os
+from dataclasses import dataclass, field
+from urllib.parse import parse_qs, urlparse
+
 
 
 
@@ -32,13 +35,14 @@ if __name__ == "__main__":
     final_file = path / "final.json"
 
     subfinderCMD = [
-        "subfinder", "-d", domain, "-silent", "-all", "-o", str(subfinder_file)
+        "subfinder", "-d", domain, "-silent", "-o", str(subfinder_file)
     ]
+    print("[+] Start: Subfinder")
     subfinderCMD = subprocess.run(subfinderCMD, capture_output=True, text=True)
     if subfinderCMD.returncode != 0:
         print("Subfinder failed:", subfinderCMD.stderr)
 
-    print(f"[+] Subfinder")
+    print("[+] Finshed: Subfinder")
 
 
     purednsCMD = [
@@ -46,12 +50,12 @@ if __name__ == "__main__":
         "-w", str(live_file),
         "-r", str(resolvers_file)
     ]
+    print("[+] Start: ")
     purednsProcess = subprocess.run(purednsCMD, capture_output=True, text=True)
     if purednsProcess.returncode != 0:
         print("PureDNS failed:", purednsProcess.stderr)
 
-    print(f"[+] Puredns")
-
+    print("[+] Finished: Puredns")
 
 
     naabuCMD = [
@@ -59,11 +63,12 @@ if __name__ == "__main__":
         "-Pn",
         "-o", str(port_file)
     ]
+    print("[+] Start:Naabue")
     naabuProcess = subprocess.run(naabuCMD, capture_output=True, text=True)
     if naabuProcess.returncode != 0:
         print("naabu failed:", naabuProcess.stderr)
 
-    print(f"[+] naabu")
+    print("[+] Finished: Naabu")
 
 
     ports = set()
@@ -73,9 +78,53 @@ if __name__ == "__main__":
             host, port = line.split(':')
             ports.add(port)
     
-    httpxCmd = ['httpx', '-l', str(live_file), '-silent','-fr' ,'-title', '-sc', '-location', '-p', f'{",".join(ports)}', '-o' ,str(httpx_file)]
+    print("[+] Start: HTTPX")
+    httpxCmd = ['httpx', '-l', str(live_file), '-silent','-nc','-fr' ,'-title', '-sc', '-location', '-p', f'{",".join(ports)}', '-o' ,str(httpx_file)]
     httpxProcess = subprocess.run(httpxCmd, capture_output=True, text=True)
     if httpxProcess.returncode != 0:
         print("httpx failed:", httpxProcess.stderr)
 
-    print("[+] httpx")
+    print("[+] Finished: HTTPX")
+
+    # Domain DataClass
+    @dataclass
+    class Subdomain:
+        hostname: str = ""
+        ports: set = field(default_factory=set) 
+        targets: set = field(default_factory=set) 
+        
+
+    # Fetch alive subdomains
+    subdomains = {}  
+    with open(str(live_file), 'r') as f:
+        for line in f:
+            line = line.strip()
+            sub = Subdomain()
+            sub.hostname = line
+            subdomains[line] = sub  
+
+    # Parse the Ports
+    with open(str(port_file), 'r') as f:
+        for line in f:
+            line = line.strip()
+            host, port = line.split(":") 
+            subdomains[host].ports.add(port)
+
+
+    #Prase HTTPX
+    with open(str(httpx_file), 'r') as f:
+        for line in f:
+            line = line.strip()
+            host = line.split()[0]
+            host = urlparse(host)
+            host = host.netloc
+            if ':' in host:
+                host = host.split(':')[0]
+            subdomains[host].targets.add(line)
+    
+
+    # Print results
+    for sub in subdomains.values():
+        print(f"{sub.hostname} {sub.ports} {sub.targets}")
+
+    
