@@ -37,9 +37,7 @@ RUN go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest 
     go install -v github.com/projectdiscovery/katana/cmd/katana@latest && \
     go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
 
-# Configure python dependencies
-COPY requirements.txt /tmp/
-RUN pip3 install --no-cache-dir --break-system-packages -r /tmp/requirements.txt
+
 
 # Create Scripts directory & static binaries
 WORKDIR /workspace
@@ -47,5 +45,15 @@ COPY bin/ /usr/local/bin
 RUN chmod +x /usr/local/bin/* 2>/dev/null || true
 COPY . /workspace
 
+# Configure python dependencies
+RUN pip3 install --no-cache-dir --break-system-packages -r requirements.txt
 
-CMD ["/bin/bash"]
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1 
+
+
+EXPOSE 8000
+
+
+
+CMD ["python3", "backend/manage.py", "runserver", "0.0.0.0:8000"]

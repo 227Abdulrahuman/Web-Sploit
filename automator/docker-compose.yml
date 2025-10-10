@@ -4,6 +4,8 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: bugbounty-automator
+    ports:
+     - "8000:8000"
     hostname: automator
     volumes:
       # Mount current directory to workspace

@@ -1,0 +1,11 @@
+b2b.jobscout24.ch
+mt-link.jobscout24.ch
+stage.jobscout24.ch
+admin.jobscout24.ch
+c-test.jobscout24.ch
+c.jobscout24.ch
+a.jobscout24.ch
+jade-stage.jobscout24.ch
+service.jobscout24.ch
+jade.jobscout24.ch
+www.jobscout24.ch
