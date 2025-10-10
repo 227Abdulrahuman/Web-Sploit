@@ -1,0 +1,4 @@
+dnspython
+requests
+Django==4.2.11
+django-ninja

@@ -1,0 +1,29 @@
+services:
+  automator:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    container_name: automator-backend
+    ports:
+     - "8000:8000"
+    hostname: automator
+    volumes:
+      # Mount current directory to workspace
+      - .:/work
+      # Keep command history
+      - automator-history:/root
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TERM=xterm-256color
+    working_dir: /work
+    stdin_open: true
+    tty: true
+    network_mode: "host"
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    restart: unless-stopped
+
+volumes:
+  automator-history:
+
