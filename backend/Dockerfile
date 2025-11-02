@@ -5,6 +5,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Install base dependencies
 RUN apt-get update && apt-get install -y \
     python3 \
+    jq \
     vim \
     python3-pip \
     libpcap-dev \
