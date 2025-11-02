@@ -1,0 +1,33 @@
+SecurityTrails:
+    apiKey: jc821BejadFcxoPC8DAsetoYgEf7fkm6
+    linkToGetAPIKey: https://securitytrails.com/app/account/credentials
+    websiteLink: https://securitytrails.com/
+    linkToGetSubdomins: https://example.com/
+
+VirusTotal:
+    apiKey: 4e2aeafe5798117e3e0a04d0229b41ed6e2f48e58df13534f57fbd8cdef585e3
+    linkToGetAPIKey: https://www.virustotal.com/gui/my-apikey
+    websiteLink: https://www.virustotal.com/gui/sign-in/
+    linkToGetSubdomins:: https://www.virustotal.com/api/v3/domains/{domain}/subdomains
+
+Shodan:
+    apiKey: YOUR_API_KEY
+    linkToGetAPIKey: https://account.shodan.io/
+    websiteLink: https://www.shodan.io/dashboard
+    linkToGetSubdomins: https://example.com/
+
+
+
+WhoisXMLAPI:
+    apiKey: YOUR_API_KEY
+    linkToGetAPIKey: https://account.shodan.io/
+    websiteLink: Shodan
+    apiKey: YOUR_API_KEY
+    linkToGetAPIKey: https://account.shodan.io/
+    websiteLink: https://www.shodan.io/dashboard
+
+Chaos:
+    apiKey: 66c7c7c1-9330-4454-930e-cf73b78119f1
+    linkToGetAPIKey: https://chaos.projectdiscovery.io/docs/api-key
+    websiteLink: https://chaos.projectdiscovery.io/
+    linkToGetSubdomins: https://jobs.ch
