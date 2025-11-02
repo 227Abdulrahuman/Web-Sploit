@@ -1,29 +1,12 @@
-import requests
+import sys
+import os
 
-keys = {
-    "SecuriryTrails" : "rntU2I9I55GNxEJ23bI75ZDXjgpsdR2v" #https://securitytrails.com/app/account/credentials
-}
+# Add the tools directory to Python path
+current_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, current_dir)
 
+# Now you can import
+from subdomains_scrapping.virusTotal.virusTotal import scrap as VTScrap
 
-def securityTrails(domain):
-    subs = set()
-    apiKey = keys["SecuriryTrails"]
-    url = f"https://api.securitytrails.com/v1/domain/{domain}/subdomains"
-    header = {"APIKEY":f"{apiKey}"}
-    
-    req = requests.get(url=url, headers=header)
-    
-    if req.status_code == 200:
-        result = req.json()['subdomains']
-        
-        for sub in result:
-            subs.add(f"{sub}.{domain}")
-            
-        print(f"[+] Found {len(subs)} subdomains from secuirty trails.")
-        return subs
-    else :
-        print("[-] API Key Expired.")
-        return set()
-
-
-
+x = VTScrap("jobs.ch")
+print(len(x))
