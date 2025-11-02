@@ -5,7 +5,7 @@ SecurityTrails:
 
 
 VirusTotal:
-    apiKey: YOUR_API_KEY
+    apiKey: 4e2aeafe5798117e3e0a04d0229b41ed6e2f48e58df13534f57fbd8cdef585e3
     linkToGetAPIKey: https://www.virustotal.com/gui/my-apikey
     websiteLink: https://www.virustotal.com/gui/sign-in/
 
