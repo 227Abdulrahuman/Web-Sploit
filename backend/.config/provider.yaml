@@ -1,0 +1,5 @@
+providers:
+  - name: SecurityTrails
+    apiKey: YOUR_API_KEY
+    linkToGetAPIKey: https://securitytrails.com/app/account/credentials
+    websiteLink: https://securitytrails.com/

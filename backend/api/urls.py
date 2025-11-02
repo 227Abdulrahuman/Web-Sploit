@@ -1,8 +1,8 @@
 from django.contrib import admin
 from django.urls import path
 from ninja import NinjaAPI
-from api.tools.subdomains import enumerateSubdomains
-
+from core.models import Domain
+import json
 api = NinjaAPI()
 
 
@@ -10,9 +10,6 @@ api = NinjaAPI()
 def add(request, a: int, b: int):
     return {"result": a + b}
 
-@api.get("/subdomains")
-def subdomains(request, domain:str):
-    return enumerateSubdomains(domain)
 
 
 
