@@ -1,5 +1,16 @@
-providers:
-  - name: SecurityTrails
+SecurityTrails:
     apiKey: YOUR_API_KEY
     linkToGetAPIKey: https://securitytrails.com/app/account/credentials
     websiteLink: https://securitytrails.com/
+
+
+VirusTotal:
+    apiKey: YOUR_API_KEY
+    linkToGetAPIKey: https://www.virustotal.com/gui/my-apikey
+    websiteLink: https://www.virustotal.com/gui/sign-in/
+
+
+Shodan:
+    apiKey: YOUR_API_KEY
+    linkToGetAPIKey: https://account.shodan.io/
+    websiteLink: https://www.shodan.io/dashboard
