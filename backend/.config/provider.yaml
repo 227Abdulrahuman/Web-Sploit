@@ -11,7 +11,7 @@ VirusTotal:
   linkToGetSubdomains: https://www.virustotal.com/api/v3/domains/{domain}/subdomains
 
 Shodan:
-  apiKey: YOUR_API_KEY
+  apiKey: HXhS41oNrxDIjFGPFwoLq451GM5njW0S
   linkToGetAPIKey: https://account.shodan.io/
   websiteLink: https://www.shodan.io/dashboard
   linkToGetSubdomains: https://example.com/
