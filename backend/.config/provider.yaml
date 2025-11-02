@@ -17,7 +17,7 @@ Shodan:
   linkToGetSubdomains: https://example.com/
 
 WhoisXMLAPI:
-  apiKey: YOUR_API_KEY
-  linkToGetAPIKey: https://account.whoisxmlapi.com/
+  apiKey: at_Z5iqaXtjgTNy6VmsFyX5izt5L3SZx
+  linkToGetAPIKey: https://user.whoisxmlapi.com/settings/general
   websiteLink: https://whoisxmlapi.com/
   linkToGetSubdomains: https://example.com/
