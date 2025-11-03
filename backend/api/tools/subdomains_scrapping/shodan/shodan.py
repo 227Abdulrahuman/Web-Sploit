@@ -15,20 +15,13 @@ def scrap(domain):
   while True:
     try:
       url = f"{BASE_URL}/{domain}?key={SHODAN_KEY}&page={page_num}"
-      
       response = requests.get(url=url)
-      
       response_data = response.json()
       prefix_subs = response_data["subdomains"]
-      
       for prefix in prefix_subs:
         subdomains.add(f"{prefix}.{domain}")
-        
-      
-
       if response_data["more"] == False:
         break
-      
       page_num+=1
       
     except Exception as Ex:
