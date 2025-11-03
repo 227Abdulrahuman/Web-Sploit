@@ -8,7 +8,7 @@ CHAOS_KEY = data['Chaos']['apiKey']
 BASE_URL = "https://dns.projectdiscovery.io/dns"
 
 
-def get_subdomains(domain):
+def scrap(domain):
     headers = {"Authorization": CHAOS_KEY}
     url = f"{BASE_URL}/{domain}/subdomains"
     subdomains = set()
