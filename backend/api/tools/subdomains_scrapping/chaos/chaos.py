@@ -2,11 +2,10 @@ import requests
 import time
 import yaml
 
-# Load Chaos API key from your config file
 with open('/work/backend/.config/provider.yaml') as file:
     data = yaml.safe_load(file)
 
-CHAOS_KEY = data['Chaos']['apiKey']  # adjust to match your YAML structure
+CHAOS_KEY = data['Chaos']['apiKey']  
 BASE_URL = "https://dns.projectdiscovery.io/dns"
 
 
