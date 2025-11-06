@@ -5,10 +5,13 @@
 #   linkToGetSubdomains: https://example.com/
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 
 >>>>>>> 9435c12 (adding urlscan provider)
+=======
+>>>>>>> 11d130b (adding urlscan provider)
 SecurityTrails:
   apiKey: YOUR_API_KEY
   linkToGetAPIKey: https://securitytrails.com/app/account/credentials
