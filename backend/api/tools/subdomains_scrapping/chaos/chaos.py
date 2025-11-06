@@ -22,5 +22,3 @@ def scrap(domain):
         subdomains = set()
     return subdomains
 
-# domain = "wien.at"
-# get_subdomains(domain=domain)
