@@ -33,3 +33,9 @@ certspotter:
   linkToGetAPIKey: https://sslmate.com/account/api_keys/63212
   websiteLink: https://sslmate.com/
   linkToGetSubdomains: https://api.certspotter.com/v1/issuances?domain=jobs.ch&include_subdomains=true&expand=dns_names
+
+AlienVault:
+  apikey: fcf5320c2c5bec1e46049621bbf5de3cbcc2837ca8c015cea6ebc94f6a0090ef
+  linkToGetAPIKey: https://otx.alienvault.com/api
+  websiteLink: https://otx.alienvault.com/
+  linkToGetSubdomains: https://otx.alienvault.com/api/v1/indicators/domain/{domain}/passive_dns
