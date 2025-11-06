@@ -14,8 +14,12 @@ def scrap(domain):
   subdomains = set()  
   while True:
     try:
-      url = f"{BASE_URL}/{domain}?key={SHODAN_KEY}&page={page_num}"
-      response = requests.get(url=url)
+      url = f"{BASE_URL}/{domain}"
+      params = {
+        "key": SHODAN_KEY,
+        "page": page_num
+      }
+      response = requests.get(url=url,params=params)
       response_data = response.json()
       prefix_subs = response_data["subdomains"]
       for prefix in prefix_subs:
