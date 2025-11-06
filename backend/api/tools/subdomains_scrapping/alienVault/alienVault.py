@@ -3,7 +3,7 @@ import yaml, requests, json
 with open('/work/backend/.config/provider.yaml') as file:
     data = yaml.safe_load(file)
 data = data["AlienVault"]
-key = data["apikey"]
+key = data["apiKey"]
 
 
 def scrap(domain):
