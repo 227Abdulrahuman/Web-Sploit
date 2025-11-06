@@ -14,10 +14,16 @@ Shodan:
   apiKey: HXhS41oNrxDIjFGPFwoLq451GM5njW0S
   linkToGetAPIKey: https://account.shodan.io/
   websiteLink: https://www.shodan.io/dashboard
-  linkToGetSubdomains: https://example.com/
+  linkToGetSubdomains: https://api.shodan.io/dns/domain/{domain}?key={Key}&page={page_num}
 
 WhoisXMLAPI:
   apiKey: at_Z5iqaXtjgTNy6VmsFyX5izt5L3SZx
   linkToGetAPIKey: https://user.whoisxmlapi.com/settings/general
   websiteLink: https://whoisxmlapi.com/
+  linkToGetSubdomains: https://example.com/
+
+Chaos:
+  apiKey: c87940b7-ef70-4f49-8ca8-d4fab7d91287
+  linkToGetAPIKey: https://cloud.projectdiscovery.io/settings/api-key
+  websiteLink: https://cloud.projectdiscovery.io/
   linkToGetSubdomains: https://example.com/

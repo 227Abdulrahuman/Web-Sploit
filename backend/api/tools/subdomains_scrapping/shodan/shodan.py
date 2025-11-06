@@ -6,38 +6,28 @@ with open('/work/backend/.config/provider.yaml') as file:
     data = yaml.safe_load(file)
     
     
-data = data['Shodan']
-Key = data['apiKey']
-
+SHODAN_KEY = data['Shodan']['apiKey']
+BASE_URL = "https://api.shodan.io/dns/domain"
 def scrap(domain):
   
-  
   page_num = 1
-  
-  subs = set()
-  
+  subdomains = set()  
   while True:
     try:
-      url = f"https://api.shodan.io/dns/domain/{domain}?key={Key}&page={page_num}"
-      
+      url = f"{BASE_URL}/{domain}?key={SHODAN_KEY}&page={page_num}"
       response = requests.get(url=url)
-      
       response_data = response.json()
       prefix_subs = response_data["subdomains"]
-      
       for prefix in prefix_subs:
-        subs.add(f"{prefix}.{domain}")
-        
-      
-
+        subdomains.add(f"{prefix}.{domain}")
       if response_data["more"] == False:
         break
-      
       page_num+=1
       
     except Exception as Ex:
-      subs = set()  
+      subdomains = set()  
       
-  return subs
-  # print("found " , len(subs) , f" subdomains in {page_num} pages\n")
-    
+  return subdomains
+
+
+# print(scrap("wien.at"))
