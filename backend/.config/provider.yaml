@@ -34,19 +34,16 @@ Chaos:
   apiKey: c87940b7-ef70-4f49-8ca8-d4fab7d91287
   linkToGetAPIKey: https://cloud.projectdiscovery.io/settings/api-key
   websiteLink: https://cloud.projectdiscovery.io/
-<<<<<<< Updated upstream
-  linkToGetSubdomains: https://example.com/
-=======
   linkToGetSubdomains: https://dns.projectdiscovery.io/dns/{domain}/subdomains
 
 certspotter:
-  apikey: k63212_Yg3TVtHSllf2KI0QjI8r
+  apiKey: k63212_Yg3TVtHSllf2KI0QjI8r
   linkToGetAPIKey: https://sslmate.com/account/api_keys/63212
   websiteLink: https://sslmate.com/
   linkToGetSubdomains: https://api.certspotter.com/v1/issuances?domain=jobs.ch&include_subdomains=true&expand=dns_names
 
 AlienVault:
-  apikey: fcf5320c2c5bec1e46049621bbf5de3cbcc2837ca8c015cea6ebc94f6a0090ef
+  apiKey: fcf5320c2c5bec1e46049621bbf5de3cbcc2837ca8c015cea6ebc94f6a0090ef
   linkToGetAPIKey: https://otx.alienvault.com/api
   websiteLink: https://otx.alienvault.com/
   linkToGetSubdomains: https://otx.alienvault.com/api/v1/indicators/domain/{domain}/passive_dns
@@ -56,4 +53,3 @@ UrlScan:
   linkToGetAPIKey: "https://urlscan.io/user/profile/"
   websiteLink: "https://urlscan.io/"
   linkToGetSubdomains: "https://urlscan.io/api/v1/search/"
->>>>>>> Stashed changes
