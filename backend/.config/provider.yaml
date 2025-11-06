@@ -4,8 +4,6 @@
 #   websiteLink: https://securitytrails.com/
 #   linkToGetSubdomains: https://example.com/
 
-
-
 SecurityTrails:
   apiKey: YOUR_API_KEY
   linkToGetAPIKey: https://securitytrails.com/app/account/credentials
@@ -25,8 +23,8 @@ Shodan:
   linkToGetSubdomains: https://api.shodan.io/dns/domain/{domain}?key={Key}&page={page_num}
 
 WhoisXMLAPI:
-  apiKey: YOUR_API_KEY
-  linkToGetAPIKey: https://account.whoisxmlapi.com/
+  apiKey: at_Z5iqaXtjgTNy6VmsFyX5izt5L3SZx
+  linkToGetAPIKey: https://user.whoisxmlapi.com/settings/general
   websiteLink: https://whoisxmlapi.com/
   linkToGetSubdomains: https://example.com/
 
@@ -47,6 +45,12 @@ AlienVault:
   linkToGetAPIKey: https://otx.alienvault.com/api
   websiteLink: https://otx.alienvault.com/
   linkToGetSubdomains: https://otx.alienvault.com/api/v1/indicators/domain/{domain}/passive_dns
+
+bevigil:
+  apiKey: BDlbCeexND9CK2X5
+  linkToGetAPIKey: https://bevigil.com/osint/api-keys
+  websiteLink: https://bevigil.com/
+  linkToGetSubdomains: https://osint.bevigil.com/api/{domain}/subdomains/
 
 UrlScan:
   apiKey: "019a5902-19d3-7476-b711-bdd05d071f1b"
