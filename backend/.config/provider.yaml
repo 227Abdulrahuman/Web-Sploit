@@ -45,3 +45,9 @@ bevigil:
   linkToGetAPIKey: https://bevigil.com/osint/api-keys
   websiteLink: https://bevigil.com/
   linkToGetSubdomains: https://osint.bevigil.com/api/{domain}/subdomains/
+
+UrlScan:
+  apiKey: "019a5902-19d3-7476-b711-bdd05d071f1b"
+  linkToGetAPIKey: "https://urlscan.io/user/profile/"
+  websiteLink: "https://urlscan.io/"
+  linkToGetSubdomains: "https://urlscan.io/api/v1/search/"
