@@ -1,13 +1,16 @@
-import yaml
-
-with open('/work/backend/.config/provider.yaml') as file:
-    data = yaml.safe_load(file)
-    
-
-data = data['SecurityTrails']
-print(data['apiKey'])
+import subprocess
 
 
 def scrap(domain):
-    
-    pass #return set()
+    cmd = ["haktrailsfree", "-d", domain, "-c", "/work/backend/api/tools/data/cookie.txt", "--silent"]
+    proc = subprocess.run(cmd,text=True,capture_output=True)
+
+    if "Cookie Expired" in proc.stdout or "Cookie Expired" in proc.stderr:
+        return {-1}
+
+    subdomains = set()
+    for line in proc.stdout.splitlines():
+        line = line.strip()
+        subdomains.add(line)
+
+    return subdomains

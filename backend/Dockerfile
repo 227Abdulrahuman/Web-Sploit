@@ -31,9 +31,9 @@ ENV PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 RUN go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest && \
     go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest && \
     go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest && \
-    go install github.com/rix4uni/haktrailsfree@latest && \
+    go install -v github.com/rix4uni/haktrailsfree@latest && \
     go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest && \
-    go install github.com/projectdiscovery/katana/cmd/katana@latest && \
+    go install -v github.com/projectdiscovery/katana/cmd/katana@latest && \
     go install -v github.com/projectdiscovery/notify/cmd/notify@latest
 
 
