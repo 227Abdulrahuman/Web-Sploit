@@ -1,8 +1,14 @@
+#Security Free API gives you at most 20000 subdomains, we will scrap the website to get the full results.
+#1)Login to https://securitytrails.com/
+# 2) Open the networks tab in the inspector (Crhome Browser)
+# 3) Visit `https://securitytrails.com/list/apex_domain/krazeplanet.com?page=1`
+# 4) Right-click on the request and Copy as cURL (bash)
+# Paste it here /work/backend/api/tools/data/cookie.txt
 SecurityTrails:
   apiKey: rntU2I9I55GNxEJ23bI75ZDXjgpsdR2v
   linkToGetAPIKey: https://securitytrails.com/app/account/credentials
   websiteLink: https://securitytrails.com/
-  linkToGetSubdomains: https://example.com/
+  linkToGetSubdomains: https://securitytrails.com/list/apex_domain/{domain}?page=1
 
 VirusTotal:
   apiKey: 4e2aeafe5798117e3e0a04d0229b41ed6e2f48e58df13534f57fbd8cdef585e3

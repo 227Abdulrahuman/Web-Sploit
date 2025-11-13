@@ -1,0 +1,22 @@
+curl 'https://securitytrails.com/list/apex_domain/krazeplanet.com?page=1' \
+  -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' \
+  -H 'accept-language: en-US,en;q=0.9,ar;q=0.8' \
+  -H 'cache-control: max-age=0' \
+  -b 'securitytrails_asn_preload=1; cf_clearance=Y18kGxa1N_UUHPprxgCqfZzKHcE38xg5rVr7I1T4pcg-1763009144-1.2.1.1-SQ84NEOHEdj1OSksKFC2igwULJBxcZKnDf88Q4HZB1YCOHk6.9CgWcC9KNchY.yXpCRnBrnkNB6oj_jRxf4BsdXynDQdkLgKhP1hQit4NydUuhsxndCBsDQTM2S2HcC7s.pO.DqcoTbMiVoVLayAbdBJZGklws1UGMXnFDleaOcfvzIb4Cdt_Op0r1ZGylfJRnomIt2bouYJ8EXo7sqdYJ3Ccr5YVueQAeMZFRAO6te3JY1pSDajo8p3uF.mdxhf; _ga=GA1.2.1223819724.1763009147; _gid=GA1.2.1600007788.1763009147; __hstc=127779026.32e86ed5b9c527491aaae0f091a315a9.1763009150194.1763009150194.1763009150194.1; hubspotutk=32e86ed5b9c527491aaae0f091a315a9; __hssrc=1; SecurityTrails=Fe26.2*1*79cf42f533f54ae5daeb74e560cf00380a75ce95dd5e2af7adb03e9bd5c5dcbf*1AwOvTm4c8mHjj2_hzo6dw*6MIhCKJ5ad8KTa434rfAKCNpx16A_2QTWjJkMw4qOkGEwGLF26rytNULk3lKPlo74nqv9Y8ZclkBFqFKf6Ns7BccWdzMdPz4XkOiAR1nxrwbiaHrtlRwxVYSdA7B0k4lN9Zea8eafk_35A8ySlx4FR3S1GyJwfOFvrNquKD-460kTrJIQDST4bn9RgKU6Clg4EI1UGivVK9QZ0clAU5DfxI-OYc7wmT_qn527ORDyv1EW-VoOOoOdi0AZlQvApRtpOWNu9tRFaiAoz4uoNDDyxustADMr5RfNOanemX5_QUsqpuLhh9PRY9hgY2QBc6qRLGkSzm5Ki7JgWcNnZ6777bVxBkGvdHhaMP9T8elCKAuWgiHtMJXUjarvrNqViS8wZIsypdC7rEKL9jPu07V9_Qe8mnHYjCmdHiHJkD54W8orB8M34-k20v73qHfx2z0EFEABOOoXSg7u1rt4iKPVR0jS6wTFTvtCGLfTLV_Hjbz6xaZgokfXtCWCkTgDn7ca-fgpXiIs-IWUkcMrzDHAS72IKYkWCIrHtpDYdl03csfYMzNXySuAaUGZAJ2yC0PU7-2pCGIb7hBL14Fw84l4_SxJ2FB3gADEYzbnfH8BLxIvCfui4TpDhHW3fUNtdd0v80l87h3WuhEgbGkRO5cY3T_2hN9_SLcoJULzcTqS_hMDZ9F-LrMy_6m2-fGCVGdc7tYxn-kXyRmAJg9cgWe30poie8vXLoTmdCbOBN3LERFWv9y-fKF0TGA224ogo64WmL4B8wEgWpCo7BUXqocgiUujdd0bVjenJSlEhhntZVkHqMjS1VQ8NZNS6tKpwIDiA8B65dlyCdsOrjCVfI8Q7xqJOYDTX7p8PtCEyUldV3ykejFXWuIzH0QLpX4T_QdccbuCbbzkKAhIh67x4gPRDFI6_TaghNcbOdXR3wdJtftanl0otloEh2L8lXahLDCOae4mCKP4T7RPSPAcETMXhCQ8GF3Tp9xt7TMoZfpyIQcvvneq-AKgvL2CNjI8amU2SXmbeTuy4ZniwR7i7XOHg*1764218821094*60d3c0b945d4ea9f33f34822fd5f775856f3a0312c83fd3d4f5ba67c68842246*H2IBnJTiGh8g5SniYD_b2LMbAwbNh4fKtB57UPR5s7M~2; __hssc=127779026.2.1763009150194; _gat_gtag_UA_108439842_1=1' \
+  -H 'priority: u=0, i' \
+  -H 'sec-ch-ua: "Chromium";v="142", "Google Chrome";v="142", "Not_A Brand";v="99"' \
+  -H 'sec-ch-ua-arch: "x86"' \
+  -H 'sec-ch-ua-bitness: "64"' \
+  -H 'sec-ch-ua-full-version: "142.0.7444.163"' \
+  -H 'sec-ch-ua-full-version-list: "Chromium";v="142.0.7444.163", "Google Chrome";v="142.0.7444.163", "Not_A Brand";v="99.0.0.0"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-model: ""' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-ch-ua-platform-version: "19.0.0"' \
+  -H 'sec-fetch-dest: document' \
+  -H 'sec-fetch-mode: navigate' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'sec-fetch-user: ?1' \
+  -H 'upgrade-insecure-requests: 1' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36'
+
