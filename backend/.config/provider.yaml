@@ -57,3 +57,9 @@ UrlScan:
   linkToGetAPIKey: "https://urlscan.io/user/profile/"
   websiteLink: "https://urlscan.io/"
   linkToGetSubdomains: "https://urlscan.io/api/v1/search/"
+
+DigitalYama:
+  apiKey: "8b19h86bwxD3Qpbae8Cx"
+  linkToGetAPIKey: "https://digitalyama.com/account/api-keys"
+  websiteLink: "https://digitalyama.com"
+  linkToGetSubdomains: "https://api.digitalyama.com/subdomain_finder?domain={domain}"
