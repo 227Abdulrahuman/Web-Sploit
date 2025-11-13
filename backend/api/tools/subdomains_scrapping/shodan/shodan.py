@@ -20,6 +20,10 @@ def scrap(domain):
         "page": page_num
       }
       response = requests.get(url=url,params=params)
+
+      if 400 <= response.status_code < 500:
+          return {-1}
+
       response_data = response.json()
       prefix_subs = response_data["subdomains"]
       for prefix in prefix_subs:

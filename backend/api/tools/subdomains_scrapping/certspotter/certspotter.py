@@ -16,6 +16,9 @@ def scrap(domain):
         response = requests.get(url, headers=headers)
         response = response.json()
 
+        if 400 <= response.status_code < 500:
+            return {-1}
+
         subdomains = set()
 
         for cert in response:
