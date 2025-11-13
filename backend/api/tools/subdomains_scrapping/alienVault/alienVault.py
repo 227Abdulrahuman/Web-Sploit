@@ -18,6 +18,9 @@ def scrap(domain):
 
         subdomains = set()
 
+        if 400 <= response.status_code < 500:
+            return {-1}
+
         for entry in response["passive_dns"]:
             subdomains.add(entry["hostname"])
 

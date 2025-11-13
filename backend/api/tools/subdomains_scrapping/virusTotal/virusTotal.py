@@ -13,7 +13,8 @@ def scrap(domain):
     url = f"https://www.virustotal.com/api/v3/domains/{domain}/subdomains"
     try:
         req = requests.get(url=url, headers=headers, params=params)
-        req.raise_for_status()
+        if 400 <= req.status_code < 500:
+            return {-1}
         resp = req.json()
         if "data" not in resp:
             return set()
