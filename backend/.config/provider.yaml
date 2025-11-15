@@ -5,13 +5,13 @@
 # 4) Right-click on the request and Copy as cURL (bash)
 # Paste it here /work/backend/api/tools/data/cookie.txt
 SecurityTrails:
-  apiKey: rntU2I9I55GNxEJ23bI75ZDXjgpsdR2v
-  linkToGetAPIKey: https://securitytrails.com/app/account/credentials
-  websiteLink: https://securitytrails.com/
-  linkToGetSubdomains: https://securitytrails.com/list/apex_domain/{domain}?page=1
+  apiKey: "rntU2I9I55GNxEJ23bI75ZDXjgpsdR2v"
+  linkToGetAPIKey: "https://securitytrails.com/app/account/credentials"
+  websiteLink: "https://securitytrails.com/"
+  linkToGetSubdomains: "https://securitytrails.com/list/apex_domain/{domain}?page=1"
 
 VirusTotal:
-  apiKey: 4e2aeafe5798117e3e0a04d0229b41ed6e2f48e58df13534f57fbd8cdef585e3
+  apiKey: "4e2aeafe5798117e3e0a04d0229b41ed6e2f48e58df13534f57fbd8cdef585e3"
   linkToGetAPIKey: https://www.virustotal.com/gui/my-apikey
   websiteLink: https://www.virustotal.com/gui/sign-in/
   linkToGetSubdomains: https://www.virustotal.com/api/v3/domains/{domain}/subdomains
@@ -47,10 +47,10 @@ AlienVault:
   linkToGetSubdomains: https://otx.alienvault.com/api/v1/indicators/domain/{domain}/passive_dns
 
 bevigil:
-  apiKey: BDlbCeexND9CK2X5
-  linkToGetAPIKey: https://bevigil.com/osint/api-keys
-  websiteLink: https://bevigil.com/
-  linkToGetSubdomains: https://osint.bevigil.com/api/{domain}/subdomains/
+  apiKey: "BDlbCeexND9CK2X5"
+  linkToGetAPIKey: "https://bevigil.com/osint/api-keys"
+  websiteLink: "https://bevigil.com/"
+  linkToGetSubdomains: "https://osint.bevigil.com/api/{domain}/subdomains/"
 
 UrlScan:
   apiKey: "019a5902-19d3-7476-b711-bdd05d071f1b"
@@ -63,3 +63,9 @@ DigitalYama:
   linkToGetAPIKey: "https://digitalyama.com/account/api-keys"
   websiteLink: "https://digitalyama.com"
   linkToGetSubdomains: "https://api.digitalyama.com/subdomain_finder?domain={domain}"
+
+DnsDumpster:
+  apiKey: "df0c68b9ff47cc6bc4051d7aba9032fc4b8bd1ab7109efd5a9662c1fb30bad84"
+  linkToGetAPIKey: "https://dnsdumpster.com/my-account/"
+  websiteLink: "https://dnsdumpster.com/"
+  linkToGetSubdomains: "https://api.dnsdumpster.com/domain/{domain}"

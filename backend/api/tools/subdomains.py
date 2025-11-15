@@ -13,22 +13,80 @@ def enum(domain):
     p.mkdir(parents=True, exist_ok=True)
 
     #1) Security Trails
-    securityTrailsResult = securityTrailsScrap(domain)
-    if securityTrailsResult == {-1}:
-        print("Security Trails key expired.")
-    else:
-        with open(f"{output_dir}/securityTrails.txt", "w") as file:
-            for subdomain in securityTrailsResult:
-                file.write(f"{subdomain}\n")
+    # securityTrailsResult = securityTrailsScrap(domain)
+    # if securityTrailsResult == {-1}:
+    #     print("Security Trails key expired.")
+    # else:
+    #     with open(f"{output_dir}/securityTrails.txt", "w") as file:
+    #         for subdomain in securityTrailsResult:
+    #             file.write(f"{subdomain}\n")
 
 
-    #2) Digital Yama
-    digitalYamaResult = digitalYamaScrap(domain)
-    if digitalYamaResult == {-1}:
-        print("Digital Yama key expired.")
+    #
+    #
+    # #2) Digital Yama
+    # # digitalYamaResult = digitalYamaScrap(domain)
+    # # if digitalYamaResult == {-1}:
+    # #     print("Digital Yama key expired.")
+    # # else:
+    # #     with open(f"{output_dir}/digitalYama.txt", "w") as file:
+    # #         for subdomain in digitalYamaResult:
+    # #             file.write(f"{subdomain}\n")
+    #
+    #
+    # #3) Anubis
+    # # from subdomains_scrapping.anubis.anubis import scrap as anubisScrap
+    # # anubisResult = anubisScrap(domain)
+    # # with open(f"{output_dir}/anubis.txt", "w") as file:
+    # #     for subdomain in anubisResult:
+    # #         file.write(f"{subdomain}\n")
+    #
+    # # #4) Chaos
+    # # from subdomains_scrapping.chaos.chaos import scrap as chaosScrap
+    # # choasResult = chaosScrap(domain)
+    # # with open(f"{output_dir}/chaos.txt", "w") as file:
+    # #     for subdomain in choasResult:
+    # #         file.write(f"{subdomain}\n")
+    #
+    #
+    # # #5) Shodan
+    # # from subdomains_scrapping.shodan.shodan import scrap as shodanScrap
+    # # shodanResult = shodanScrap(domain)
+    # # with open(f"{output_dir}/shodan.txt", "w") as file:
+    # #     for subdomain in shodanResult:
+    # #         file.write(f"{subdomain}\n")
+    #
+    # #6) Urlscan
+    # from subdomains_scrapping.urlScan.urlScan import scarp as urlScanScrap
+    # urlScanResult = urlScanScrap(domain)
+    # with open(f"{output_dir}/urlScan.txt", "w") as file:
+    #     for subdomain in urlScanResult:
+    #         file.write(f"{subdomain}\n")
+    #
+    # #7) certspotter
+    # # from subdomains_scrapping.certspotter.certspotter import scrap as certspotterScrap
+    # # certspotterResult = certspotterScrap(domain)
+    # # with open(f"{output_dir}/certspotter.txt", "w") as file:
+    # #     for subdomain in certspotterResult:
+    # #         file.write(f"{subdomain}\n")
+    #
+    #
+    # #8) bevigil
+    # from subdomains_scrapping.bevigil.bevigil import scrap as bevigilScrap
+    # bevigilResult = bevigilScrap(domain)
+    # with open(f"{output_dir}/bevigil.txt", "w") as file:
+    #     for subdomain in bevigilResult:
+    #         file.write(f"{subdomain}\n")
+
+
+    #9) dnsdumpster
+    from subdomains_scrapping.dnsDumpster.dnsDumpster import scrap as dnsDumpsterScrap
+    dnsDumpsterResult = dnsDumpsterScrap(domain)
+    if dnsDumpsterResult == {-1}:
+        print("DNS Dumpster key expired.")
     else:
-        with open(f"{output_dir}/digitalYama.txt", "w") as file:
-            for subdomain in digitalYamaResult:
+        with open(f"{output_dir}/dnsDumpster.txt", "w") as file:
+            for subdomain in dnsDumpsterResult:
                 file.write(f"{subdomain}\n")
 
 enum("jobs.ch")
