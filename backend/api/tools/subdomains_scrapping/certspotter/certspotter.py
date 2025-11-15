@@ -14,10 +14,10 @@ def scrap(domain):
     }
     try:
         response = requests.get(url, headers=headers)
-        response = response.json()
-
         if 400 <= response.status_code < 500:
             return {-1}
+
+        response = response.json()
 
         subdomains = set()
 
