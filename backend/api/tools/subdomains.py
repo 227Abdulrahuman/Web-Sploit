@@ -89,4 +89,14 @@ def enum(domain):
             for subdomain in dnsDumpsterResult:
                 file.write(f"{subdomain}\n")
 
+    #10) Umbrella
+    from subdomains_scrapping.umbrella.umbrella import scrap as umbrellaScrap
+    umbrellaResult = umbrellaScrap(domain)
+    if umbrellaResult == {-1}:
+        print("Umbrella key expired.")
+    else:
+        with open(f"{output_dir}/umbrella.txt", "w") as file:
+            for subdomain in umbrellaResult:
+                file.write(f"{subdomain}\n")
+
 enum("jobs.ch")
