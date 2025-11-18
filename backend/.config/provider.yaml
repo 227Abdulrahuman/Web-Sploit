@@ -69,3 +69,9 @@ DnsDumpster:
   linkToGetAPIKey: "https://dnsdumpster.com/my-account/"
   websiteLink: "https://dnsdumpster.com/"
   linkToGetSubdomains: "https://api.dnsdumpster.com/domain/{domain}"
+
+Umbrella:
+  apiKey: "9cb92ce00c03427a8c84bec592a60220:7d4d8b2146de4589882c8faf19fed0f1"
+  linkToGetAPIKey: "https://dashboard.umbrella.com/o/8364356/#/admin/apikeys"
+  websiteLink: "https://signup.umbrella.com/"
+  linkToGetSubdomains: "https://api.umbrella.com/investigate/v2/subdomains/{DOMAIN}"
