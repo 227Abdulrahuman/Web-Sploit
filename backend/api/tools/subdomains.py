@@ -99,14 +99,24 @@ def enum(domain):
     #         for subdomain in umbrellaResult:
     #             file.write(f"{subdomain}\n")
 
-    #11) Full Hunt
-    from subdomains_scrapping.fullHunt.fullHunt import scrap as fullHuntScrap
-    fullHuntResult = fullHuntScrap(domain)
-    if fullHuntResult == {-1}:
-        print("Full Hunt key expired.")
-    else:
-        with open(f"{output_dir}/fullHunt.txt", "w") as file:
-            for subdomain in fullHuntResult:
-                file.write(f"{subdomain}\n")
+    # #11) Full Hunt
+    # from subdomains_scrapping.fullHunt.fullHunt import scrap as fullHuntScrap
+    # fullHuntResult = fullHuntScrap(domain)
+    # if fullHuntResult == {-1}:
+    #     print("Full Hunt key expired.")
+    # else:
+    #     with open(f"{output_dir}/fullHunt.txt", "w") as file:
+    #         for subdomain in fullHuntResult:
+    #             file.write(f"{subdomain}\n")
 
-enum("uber.com")
+    #12) netlas
+    # from subdomains_scrapping.netlas.netlas import scrap as netlasScrap
+    # netlasResult = netlasScrap(domain)
+    # if netlasResult == {-1}:
+    #     print("Netlas key expired.")
+    # else:
+    #     with open(f"{output_dir}/netlas.txt", "w") as file:
+    #         for subdomain in netlasResult:
+    #             file.write(f"{subdomain}\n")
+
+enum("jobs.ch")

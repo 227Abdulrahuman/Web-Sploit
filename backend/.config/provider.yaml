@@ -81,3 +81,9 @@ FullHunt:
   linkToGetAPIKey: "https://fullhunt.io/user/settings/"
   websiteLink: "https://fullhunt.io/"
   linkToGetSubdomains: "https://fullhunt.io/api/v1/domain/{domain}/subdomains"
+
+Netlas:
+  apiKey: "TlRtZDzSPcpg8hLwOxu3WDnau1vTn1Kh"
+  linkToGetAPIKey: "https://app.netlas.io/profile/"
+  websiteLink: "https://netlas.io/"
+  linkToGetSubdomains: "https://fullhunt.io/api/v1/domain/{domain}/subdomains"
