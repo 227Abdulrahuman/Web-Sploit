@@ -25,4 +25,3 @@ def scarp(domain):
   except Exception:
     subdomains = set()
   return subdomains
-# scarp('uber.ch')

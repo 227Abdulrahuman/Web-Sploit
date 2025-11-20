@@ -1,0 +1,3 @@
+media.jobup.ch
+service.jobup.ch
+www.jobup.ch

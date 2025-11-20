@@ -14,12 +14,12 @@ def scrap(domain):
     }
     try:
         response = requests.get(url, headers=headers)
-        response = response.json()
 
         subdomains = set()
 
         if 400 <= response.status_code < 500:
             return {-1}
+        response = response.json()
 
         for entry in response["passive_dns"]:
             subdomains.add(entry["hostname"])
@@ -28,4 +28,3 @@ def scrap(domain):
 
     except Exception:
         return set()
-

@@ -8,7 +8,13 @@ with open('/work/backend/.config/provider.yaml') as file:
 
 SHODAN_KEY = data['Shodan']['apiKey']
 BASE_URL = "https://api.shodan.io/dns/domain"
+
+
 def scrap(domain):
+  check = requests.get(f"https://api.shodan.io/account/profile?key={SHODAN_KEY}")
+
+  if check.status_code == 401:
+      return {-1}
 
   page_num = 1
   subdomains = set()
@@ -21,9 +27,6 @@ def scrap(domain):
       }
       response = requests.get(url=url,params=params)
 
-      if 400 <= response.status_code < 500:
-          return {-1}
-
       response_data = response.json()
       prefix_subs = response_data["subdomains"]
       for prefix in prefix_subs:
@@ -34,6 +37,3 @@ def scrap(domain):
     except Exception:
       subdomains = set()
   return subdomains
-
-
-# print(scrap("wien.at"))
