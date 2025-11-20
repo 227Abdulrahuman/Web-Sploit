@@ -119,4 +119,11 @@ def enum(domain):
     #         for subdomain in netlasResult:
     #             file.write(f"{subdomain}\n")
 
+    #13) c99
+    from subdomains_scrapping.c99.c99 import scrap as c99Scrap
+    c99Result = c99Scrap(domain)
+    with open(f"{output_dir}/c99.txt", "w") as file:
+        for subdomain in c99Result:
+            file.write(f"{subdomain}\n")
+
 enum("jobs.ch")
