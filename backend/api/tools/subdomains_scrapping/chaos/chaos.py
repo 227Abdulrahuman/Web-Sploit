@@ -27,7 +27,3 @@ def scrap(domain):
     except Exception as e:
         subdomains = set()
     return subdomains
-
-
-for i in scrap("jobs.ch"):
-    print(i)

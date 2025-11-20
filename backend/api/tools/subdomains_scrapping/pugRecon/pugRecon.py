@@ -29,8 +29,3 @@ def scrap(domain):
     except requests.RequestException as e:
         print(f"Request error: {e}")
         return set()
-
-
-
-for i in scrap("jobs.ch"):
-    print(i)

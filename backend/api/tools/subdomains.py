@@ -1,139 +1,119 @@
 import sys
 import os
 from pathlib import Path
-from subdomains_scrapping.securityTrails.securityTrails import scrap as securityTrailsScrap
-from subdomains_scrapping.digitalYama.digitalYama import scrap as digitalYamaScrap
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import subprocess
 
-current_dir = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, current_dir)
+
+from subdomains_scrapping.alienVault.alienVault import scrap as alienVaultScrap
+from subdomains_scrapping.anubis.anubis import scrap as anubisScrap
+from subdomains_scrapping.bevigil.bevigil import scrap as bevigilScrap
+from subdomains_scrapping.c99.c99 import scrap as c99Scrap
+from subdomains_scrapping.certspotter.certspotter import scrap as certspotterScrap
+from subdomains_scrapping.chaos.chaos import scrap as chaosScrap
+from subdomains_scrapping.crtsh.crtsh import scrap as crtshScrap
+from subdomains_scrapping.digitalYama.digitalYama import scrap as digitalYamaScrap
+from subdomains_scrapping.dnsDumpster.dnsDumpster import scrap as dnsDumpsterScrap
+from subdomains_scrapping.fullHunt.fullHunt import scrap as fullHuntScrap
+from subdomains_scrapping.leakix.leakix import scrap as leakixScrap
+from subdomains_scrapping.netlas.netlas import scrap as netlasScrap
+from subdomains_scrapping.pugRecon.pugRecon import scrap as pugReconScrap
+from subdomains_scrapping.securityTrails.securityTrails import scrap as securityTrailsScrap
+from subdomains_scrapping.shodan.shodan import scrap as shodanScrap
+from subdomains_scrapping.umbrella.umbrella import scrap as umbrellaScrap
+from subdomains_scrapping.urlScan.urlScan import scarp as urlScanScrap
+from subdomains_scrapping.virusTotal.virusTotal import scrap as virusTotalScrap
+
+
+def run_scraper(name, func, domain, output_dir):
+    try:
+        result = func(domain)
+
+        if result == {-1}:
+            print(f"[-] {name} key expired.")
+            return (name, 0, [])
+
+        filepath = f"{output_dir}/{name}.txt"
+        with open(filepath, "w") as f:
+            for sub in result:
+                f.write(sub + "\n")
+
+        count = len(result)
+        print(f"[+] {name} found {count} subdomains.")
+
+        return (name, count, result)
+
+    except Exception as e:
+        print(f"[ERROR] {name}: {e}")
+        return (name, 0, [])
+
 
 def enum(domain):
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    sys.path.insert(0, current_dir)
     output_dir = f"/work/backend/api/tools/output/{domain}"
     p = Path(output_dir)
     p.mkdir(parents=True, exist_ok=True)
 
-    #1) Security Trails
-    # securityTrailsResult = securityTrailsScrap(domain)
-    # if securityTrailsResult == {-1}:
-    #     print("Security Trails key expired.")
-    # else:
-    #     with open(f"{output_dir}/securityTrails.txt", "w") as file:
-    #         for subdomain in securityTrailsResult:
-    #             file.write(f"{subdomain}\n")
+    scrapers = [
+        ("securityTrails", securityTrailsScrap),
+        ("anubis", anubisScrap),
+        ("bevigil", bevigilScrap),
+        ("c99", c99Scrap),
+        ("certspotter", certspotterScrap),
+        ("chaos", chaosScrap),
+        ("crtsh", crtshScrap),
+        ("dnsDumpster", dnsDumpsterScrap),
+        ("fullHunt", fullHuntScrap),
+        ("leakix", leakixScrap),
+        ("netlas", netlasScrap),
+        ("pugRecon", pugReconScrap),
+        ("shodan", shodanScrap),
+        ("digitalYama", digitalYamaScrap),
+        ("umbrella", umbrellaScrap),
+        ("urlScan", urlScanScrap),
+        ("virusTotal", virusTotalScrap),
+        ("alienVault", alienVaultScrap),
+    ]
+
+    print(f"[+] Starting Passive Enumeration for {domain}\n")
+
+    results = {}
+    all_subdomains = set()
+
+    with ThreadPoolExecutor(max_workers=len(scrapers)) as executor:
+        futures = {
+            executor.submit(run_scraper, name, func, domain, output_dir): name
+            for name, func in scrapers
+        }
+
+        for future in as_completed(futures):
+            name, count, subs = future.result()
+            results[name] = count
+            all_subdomains.update(subs)
+
+    passive_file = f"{output_dir}/passive.all.txt"
+    live_file = f"{output_dir}/passive.live.txt"
+    with open(passive_file, "w") as f:
+        for sub in sorted(all_subdomains):
+            f.write(sub + "\n")
+
+    cmd = ['puredns', 'resolve', passive_file, '-r', '/work/backend/api/tools/data/resolvers.txt', '-w', live_file]
+
+    subprocess.run(cmd, text=True, capture_output=True)
+
+    totalLive = set()
+    with open(live_file, "r") as f:
+        for line in f:
+            sub = line.strip()
+            if sub.endswith(f".{domain}"):
+                totalLive.add(sub)
+
+    with open(live_file, "w") as f:
+        for sub in sorted(totalLive):
+            f.write(sub + "\n")
+
+    print(f"[+] Total live subdomains: {len(totalLive)}\n")
 
 
-    #
-    #
-    # #2) Digital Yama
-    # # digitalYamaResult = digitalYamaScrap(domain)
-    # # if digitalYamaResult == {-1}:
-    # #     print("Digital Yama key expired.")
-    # # else:
-    # #     with open(f"{output_dir}/digitalYama.txt", "w") as file:
-    # #         for subdomain in digitalYamaResult:
-    # #             file.write(f"{subdomain}\n")
-    #
-    #
-    # #3) Anubis
-    # # from subdomains_scrapping.anubis.anubis import scrap as anubisScrap
-    # # anubisResult = anubisScrap(domain)
-    # # with open(f"{output_dir}/anubis.txt", "w") as file:
-    # #     for subdomain in anubisResult:
-    # #         file.write(f"{subdomain}\n")
-    #
-    # # #4) Chaos
-    # # from subdomains_scrapping.chaos.chaos import scrap as chaosScrap
-    # # choasResult = chaosScrap(domain)
-    # # with open(f"{output_dir}/chaos.txt", "w") as file:
-    # #     for subdomain in choasResult:
-    # #         file.write(f"{subdomain}\n")
-    #
-    #
-    # # #5) Shodan
-    # # from subdomains_scrapping.shodan.shodan import scrap as shodanScrap
-    # # shodanResult = shodanScrap(domain)
-    # # with open(f"{output_dir}/shodan.txt", "w") as file:
-    # #     for subdomain in shodanResult:
-    # #         file.write(f"{subdomain}\n")
-    #
-    # #6) Urlscan
-    # from subdomains_scrapping.urlScan.urlScan import scarp as urlScanScrap
-    # urlScanResult = urlScanScrap(domain)
-    # with open(f"{output_dir}/urlScan.txt", "w") as file:
-    #     for subdomain in urlScanResult:
-    #         file.write(f"{subdomain}\n")
-    #
-    # #7) certspotter
-    # # from subdomains_scrapping.certspotter.certspotter import scrap as certspotterScrap
-    # # certspotterResult = certspotterScrap(domain)
-    # # with open(f"{output_dir}/certspotter.txt", "w") as file:
-    # #     for subdomain in certspotterResult:
-    # #         file.write(f"{subdomain}\n")
-    #
-    #
-    # #8) bevigil
-    # from subdomains_scrapping.bevigil.bevigil import scrap as bevigilScrap
-    # bevigilResult = bevigilScrap(domain)
-    # with open(f"{output_dir}/bevigil.txt", "w") as file:
-    #     for subdomain in bevigilResult:
-    #         file.write(f"{subdomain}\n")
-
-
-    #9) dnsdumpster
-    # from subdomains_scrapping.dnsDumpster.dnsDumpster import scrap as dnsDumpsterScrap
-    # dnsDumpsterResult = dnsDumpsterScrap(domain)
-    # if dnsDumpsterResult == {-1}:
-    #     print("DNS Dumpster key expired.")
-    # else:
-    #     with open(f"{output_dir}/dnsDumpster.txt", "w") as file:
-    #         for subdomain in dnsDumpsterResult:
-    #             file.write(f"{subdomain}\n")
-
-    #10) Umbrella
-    # from subdomains_scrapping.umbrella.umbrella import scrap as umbrellaScrap
-    # umbrellaResult = umbrellaScrap(domain)
-    # if umbrellaResult == {-1}:
-    #     print("Umbrella key expired.")
-    # else:
-    #     with open(f"{output_dir}/umbrella.txt", "w") as file:
-    #         for subdomain in umbrellaResult:
-    #             file.write(f"{subdomain}\n")
-
-    # #11) Full Hunt
-    # from subdomains_scrapping.fullHunt.fullHunt import scrap as fullHuntScrap
-    # fullHuntResult = fullHuntScrap(domain)
-    # if fullHuntResult == {-1}:
-    #     print("Full Hunt key expired.")
-    # else:
-    #     with open(f"{output_dir}/fullHunt.txt", "w") as file:
-    #         for subdomain in fullHuntResult:
-    #             file.write(f"{subdomain}\n")
-
-    #12) netlas
-    from subdomains_scrapping.netlas.netlas import scrap as netlasScrap
-    netlasResult = netlasScrap(domain)
-    if netlasResult == {-1}:
-        print("Netlas key expired.")
-    else:
-        with open(f"{output_dir}/netlas.txt", "w") as file:
-            for subdomain in netlasResult:
-                file.write(f"{subdomain}\n")
-
-    #13) c99
-    # from subdomains_scrapping.c99.c99 import scrap as c99Scrap
-    # c99Result = c99Scrap(domain)
-    # with open(f"{output_dir}/c99.txt", "w") as file:
-    #     for subdomain in c99Result:
-    #         file.write(f"{subdomain}\n")
-
-    #14) VirusTotal
-    from subdomains_scrapping.virusTotal.virusTotal import scrap as virusTotalScrap
-    virusTotalResult = virusTotalScrap(domain)
-    if virusTotalResult == {-1}:
-        print("VirusTotal key expired.")
-    else:
-        with open(f"{output_dir}/virusTotal.txt", "w") as file:
-            for subdomain in virusTotalResult:
-                file.write(f"{subdomain}\n")
-
-enum("jobs.ch")
+enum("dell.com")

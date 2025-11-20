@@ -23,6 +23,3 @@ def scrap(domain):
     except Exception:
         return set()
 
-
-for i in scrap("jobs.ch"):
-    print(i)
