@@ -87,3 +87,9 @@ Netlas:
   linkToGetAPIKey: "https://app.netlas.io/profile/"
   websiteLink: "https://netlas.io/"
   linkToGetSubdomains: "https://fullhunt.io/api/v1/domain/{domain}/subdomains"
+
+Leakix:
+  apiKey: "Sto1dcTEuPmAe2TQtnsTTH7io5AO58tj4zH4T7AVfKHbaK3Q"
+  linkToGetAPIKey: "https://leakix.net/settings/api"
+  websiteLink: "https://leakix.net/"
+  linkToGetSubdomains: "https://leakix.net/api/subdomains/{domain}"
