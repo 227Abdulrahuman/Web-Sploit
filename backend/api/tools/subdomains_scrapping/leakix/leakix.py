@@ -22,5 +22,3 @@ def scrap(domain):
 
     return subdomains
 
-for sub in scrap("jobs.ch"):
-    print(sub)

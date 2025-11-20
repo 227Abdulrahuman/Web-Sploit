@@ -1,4 +1,4 @@
-import yaml, requests, json, time
+import yaml, requests, json, time, subprocess
 
 with open('/work/backend/.config/provider.yaml') as file:
     data = yaml.safe_load(file)
@@ -42,7 +42,7 @@ def scrap(domain):
 
         if response.status_code == 429:
             retryCounter += 1
-            time.sleep(3)
+            time.sleep(5)
 
             if retryCounter > 3:
                 break
@@ -61,4 +61,23 @@ def scrap(domain):
             subdomains.update(subs)
 
             offset_name = data[-1]["name"]
-    return subdomains
+
+
+    with open(f"/work/backend/api/tools/output/{domain}/umbrella.all.txt", "w") as f:
+        for sub in sorted(subdomains):
+            f.write(sub + "\n")
+
+    cmd = ['puredns', 'resolve', f"/work/backend/api/tools/output/{domain}/umbrella.all.txt", '-r', '/work/backend/api/tools/data/resolvers.txt', '-w', f"/work/backend/api/tools/output/{domain}/umbrella.live.txt"]
+
+    subprocess.run(cmd,capture_output=True,text=True)
+
+
+    subdomainsFinal = set()
+
+    with open(f"/work/backend/api/tools/output/{domain}/umbrella.live.txt", "r") as f:
+        for line in f:
+            sub = line.strip()
+            if sub:
+                subdomainsFinal.add(sub)
+
+    return subdomainsFinal
