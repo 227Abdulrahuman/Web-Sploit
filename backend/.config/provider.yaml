@@ -12,39 +12,39 @@ SecurityTrails:
 
 VirusTotal:
   apiKey: "4e2aeafe5798117e3e0a04d0229b41ed6e2f48e58df13534f57fbd8cdef585e3"
-  linkToGetAPIKey: https://www.virustotal.com/gui/my-apikey
-  websiteLink: https://www.virustotal.com/gui/sign-in/
-  linkToGetSubdomains: https://www.virustotal.com/api/v3/domains/{domain}/subdomains
+  linkToGetAPIKey: "https://www.virustotal.com/gui/my-apikey"
+  websiteLink: "https://www.virustotal.com/gui/sign-in/"
+  linkToGetSubdomains: "https://www.virustotal.com/api/v3/domains/{domain}/subdomains"
 
 Shodan:
-  apiKey: HXhS41oNrxDIjFGPFwoLq451GM5njW0S
-  linkToGetAPIKey: https://account.shodan.io/
-  websiteLink: https://www.shodan.io/dashboard
-  linkToGetSubdomains: https://api.shodan.io/dns/domain/{domain}?key={Key}&page={page_num}
+  apiKey: "HXhS41oNrxDIjFGPFwoLq451GM5njW0S"
+  linkToGetAPIKey: "https://account.shodan.io/"
+  websiteLink: "https://www.shodan.io/dashboard"
+  linkToGetSubdomains: "https://api.shodan.io/dns/domain/{domain}?key={Key}&page={page_num}"
 
 WhoisXMLAPI:
-  apiKey: at_Z5iqaXtjgTNy6VmsFyX5izt5L3SZx
-  linkToGetAPIKey: https://user.whoisxmlapi.com/settings/general
-  websiteLink: https://whoisxmlapi.com/
+  apiKey: "at_Z5iqaXtjgTNy6VmsFyX5izt5L3SZx"
+  linkToGetAPIKey: "https://user.whoisxmlapi.com/settings/general"
+  websiteLink: "https://whoisxmlapi.com/"
   linkToGetSubdomains: https://example.com/
 
 Chaos:
-  apiKey: c87940b7-ef70-4f49-8ca8-d4fab7d91287
-  linkToGetAPIKey: https://cloud.projectdiscovery.io/settings/api-key
-  websiteLink: https://cloud.projectdiscovery.io/
-  linkToGetSubdomains: https://dns.projectdiscovery.io/dns/{domain}/subdomains
+  apiKey: "c87940b7-ef70-4f49-8ca8-d4fab7d91287"
+  linkToGetAPIKey: "https://cloud.projectdiscovery.io/settings/api-key"
+  websiteLink: "https://cloud.projectdiscovery.io/"
+  linkToGetSubdomains: "https://dns.projectdiscovery.io/dns/{domain}/subdomains"
 
 certspotter:
-  apiKey: k63212_Yg3TVtHSllf2KI0QjI8r
-  linkToGetAPIKey: https://sslmate.com/account/api_keys/63212
-  websiteLink: https://sslmate.com/
-  linkToGetSubdomains: https://api.certspotter.com/v1/issuances?domain=jobs.ch&include_subdomains=true&expand=dns_names
+  apiKey: "k63212_Yg3TVtHSllf2KI0QjI8r"
+  linkToGetAPIKey: "https://sslmate.com/account/api_keys/63212"
+  websiteLink: "https://sslmate.com/"
+  linkToGetSubdomains: "https://api.certspotter.com/v1/issuances?domain=jobs.ch&include_subdomains=true&expand=dns_names"
 
 AlienVault:
-  apiKey: fcf5320c2c5bec1e46049621bbf5de3cbcc2837ca8c015cea6ebc94f6a0090ef
-  linkToGetAPIKey: https://otx.alienvault.com/api
-  websiteLink: https://otx.alienvault.com/
-  linkToGetSubdomains: https://otx.alienvault.com/api/v1/indicators/domain/{domain}/passive_dns
+  apiKey: "fcf5320c2c5bec1e46049621bbf5de3cbcc2837ca8c015cea6ebc94f6a0090ef"
+  linkToGetAPIKey: "https://otx.alienvault.com/api"
+  websiteLink: "https://otx.alienvault.com/"
+  linkToGetSubdomains: "https://otx.alienvault.com/api/v1/indicators/domain/{domain}/passive_dns"
 
 bevigil:
   apiKey: "BDlbCeexND9CK2X5"
@@ -74,4 +74,10 @@ Umbrella:
   apiKey: "9cb92ce00c03427a8c84bec592a60220:7d4d8b2146de4589882c8faf19fed0f1"
   linkToGetAPIKey: "https://dashboard.umbrella.com/o/8364356/#/admin/apikeys"
   websiteLink: "https://signup.umbrella.com/"
-  linkToGetSubdomains: "https://api.umbrella.com/investigate/v2/subdomains/{DOMAIN}"
+  linkToGetSubdomains: "https://api.umbrella.com/investigate/v2/subdomains/{domain}"
+
+FullHunt:
+  apiKey: "39f96bfd-5902-42db-8a0a-feeed521bbd5"
+  linkToGetAPIKey: "https://fullhunt.io/user/settings/"
+  websiteLink: "https://fullhunt.io/"
+  linkToGetSubdomains: "https://fullhunt.io/api/v1/domain/{domain}/subdomains"
