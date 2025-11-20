@@ -80,23 +80,33 @@ def enum(domain):
 
 
     #9) dnsdumpster
-    from subdomains_scrapping.dnsDumpster.dnsDumpster import scrap as dnsDumpsterScrap
-    dnsDumpsterResult = dnsDumpsterScrap(domain)
-    if dnsDumpsterResult == {-1}:
-        print("DNS Dumpster key expired.")
-    else:
-        with open(f"{output_dir}/dnsDumpster.txt", "w") as file:
-            for subdomain in dnsDumpsterResult:
-                file.write(f"{subdomain}\n")
+    # from subdomains_scrapping.dnsDumpster.dnsDumpster import scrap as dnsDumpsterScrap
+    # dnsDumpsterResult = dnsDumpsterScrap(domain)
+    # if dnsDumpsterResult == {-1}:
+    #     print("DNS Dumpster key expired.")
+    # else:
+    #     with open(f"{output_dir}/dnsDumpster.txt", "w") as file:
+    #         for subdomain in dnsDumpsterResult:
+    #             file.write(f"{subdomain}\n")
 
     #10) Umbrella
-    from subdomains_scrapping.umbrella.umbrella import scrap as umbrellaScrap
-    umbrellaResult = umbrellaScrap(domain)
-    if umbrellaResult == {-1}:
-        print("Umbrella key expired.")
+    # from subdomains_scrapping.umbrella.umbrella import scrap as umbrellaScrap
+    # umbrellaResult = umbrellaScrap(domain)
+    # if umbrellaResult == {-1}:
+    #     print("Umbrella key expired.")
+    # else:
+    #     with open(f"{output_dir}/umbrella.txt", "w") as file:
+    #         for subdomain in umbrellaResult:
+    #             file.write(f"{subdomain}\n")
+
+    #11) Full Hunt
+    from subdomains_scrapping.fullHunt.fullHunt import scrap as fullHuntScrap
+    fullHuntResult = fullHuntScrap(domain)
+    if fullHuntResult == {-1}:
+        print("Full Hunt key expired.")
     else:
-        with open(f"{output_dir}/umbrella.txt", "w") as file:
-            for subdomain in umbrellaResult:
+        with open(f"{output_dir}/fullHunt.txt", "w") as file:
+            for subdomain in fullHuntResult:
                 file.write(f"{subdomain}\n")
 
-enum("jobs.ch")
+enum("uber.com")
