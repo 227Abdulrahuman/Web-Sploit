@@ -20,9 +20,14 @@ def scrap(domain):
 
         subs = response.json()["subdomains"]
         for subdomain in subs:
-          full_subdomain = f"{subdomain}.{domain}"
-          subdomains.add(full_subdomain)
+            full_subdomain = f"{subdomain}.{domain}"
+            if full_subdomain[0] == '*' and full_subdomain[1] == '.':
+                full_subdomain = full_subdomain[2:]
+            subdomains.add(full_subdomain)
     except Exception as e:
         subdomains = set()
     return subdomains
 
+
+for i in scrap("jobs.ch"):
+    print(i)

@@ -110,20 +110,30 @@ def enum(domain):
     #             file.write(f"{subdomain}\n")
 
     #12) netlas
-    # from subdomains_scrapping.netlas.netlas import scrap as netlasScrap
-    # netlasResult = netlasScrap(domain)
-    # if netlasResult == {-1}:
-    #     print("Netlas key expired.")
-    # else:
-    #     with open(f"{output_dir}/netlas.txt", "w") as file:
-    #         for subdomain in netlasResult:
-    #             file.write(f"{subdomain}\n")
+    from subdomains_scrapping.netlas.netlas import scrap as netlasScrap
+    netlasResult = netlasScrap(domain)
+    if netlasResult == {-1}:
+        print("Netlas key expired.")
+    else:
+        with open(f"{output_dir}/netlas.txt", "w") as file:
+            for subdomain in netlasResult:
+                file.write(f"{subdomain}\n")
 
     #13) c99
-    from subdomains_scrapping.c99.c99 import scrap as c99Scrap
-    c99Result = c99Scrap(domain)
-    with open(f"{output_dir}/c99.txt", "w") as file:
-        for subdomain in c99Result:
-            file.write(f"{subdomain}\n")
+    # from subdomains_scrapping.c99.c99 import scrap as c99Scrap
+    # c99Result = c99Scrap(domain)
+    # with open(f"{output_dir}/c99.txt", "w") as file:
+    #     for subdomain in c99Result:
+    #         file.write(f"{subdomain}\n")
+
+    #14) VirusTotal
+    from subdomains_scrapping.virusTotal.virusTotal import scrap as virusTotalScrap
+    virusTotalResult = virusTotalScrap(domain)
+    if virusTotalResult == {-1}:
+        print("VirusTotal key expired.")
+    else:
+        with open(f"{output_dir}/virusTotal.txt", "w") as file:
+            for subdomain in virusTotalResult:
+                file.write(f"{subdomain}\n")
 
 enum("jobs.ch")
