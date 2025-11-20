@@ -93,3 +93,9 @@ Leakix:
   linkToGetAPIKey: "https://leakix.net/settings/api"
   websiteLink: "https://leakix.net/"
   linkToGetSubdomains: "https://leakix.net/api/subdomains/{domain}"
+
+PugRecon:
+  apiKey: "zkB6d2bgnR11JVGPpk5GTr3iXjbhNk40mDyJHswZhoSIK3ci"
+  linkToGetAPIKey: "https://pugrecon.com/dashboard/"
+  websiteLink: "https://pugrecon.com/"
+  linkToGetSubdomains: "https://pugrecon.com/api/v1/domains"
