@@ -1,4 +1,0 @@
-media.jobs.ch
-www.jobs.ch
-test.media.jobs.ch
-www.stage.jobs.ch

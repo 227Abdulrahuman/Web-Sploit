@@ -4,6 +4,10 @@ from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import subprocess
 
+import django
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "api.settings")
+django.setup()
+from core.models import Company, Domain, Subdomain
 
 from subdomains_scrapping.alienVault.alienVault import scrap as alienVaultScrap
 from subdomains_scrapping.anubis.anubis import scrap as anubisScrap
@@ -21,7 +25,7 @@ from subdomains_scrapping.pugRecon.pugRecon import scrap as pugReconScrap
 from subdomains_scrapping.securityTrails.securityTrails import scrap as securityTrailsScrap
 from subdomains_scrapping.shodan.shodan import scrap as shodanScrap
 from subdomains_scrapping.umbrella.umbrella import scrap as umbrellaScrap
-from subdomains_scrapping.urlScan.urlScan import scarp as urlScanScrap
+from subdomains_scrapping.urlScan.urlScan import scrap as urlScanScrap
 from subdomains_scrapping.virusTotal.virusTotal import scrap as virusTotalScrap
 
 
@@ -48,10 +52,23 @@ def run_scraper(name, func, domain, output_dir):
         return (name, 0, [])
 
 
-def enum(domain):
+def save_subdomains(base_domain, subs, live):
+
+    domain = Domain.objects.get(hostname=base_domain)
+
+    for hostname in subs:
+        is_alive = hostname in live
+        Subdomain.objects.get_or_create(
+            domain=domain,
+            hostname=hostname,
+            defaults={"is_alive": is_alive}
+        )
+
+
+def passive_enum(domain):
     current_dir = os.path.dirname(os.path.abspath(__file__))
     sys.path.insert(0, current_dir)
-    output_dir = f"/work/backend/api/tools/output/{domain}"
+    output_dir = f"/work/backend/api/tools/output/{domain}/scrapers"
     p = Path(output_dir)
     p.mkdir(parents=True, exist_ok=True)
 
@@ -92,8 +109,8 @@ def enum(domain):
             results[name] = count
             all_subdomains.update(subs)
 
-    passive_file = f"{output_dir}/passive.all.txt"
-    live_file = f"{output_dir}/passive.live.txt"
+    passive_file = f"/work/backend/api/tools/output/{domain}/passive.txt"
+    live_file = f"/work/backend/api/tools/output/{domain}/live.txt"
     with open(passive_file, "w") as f:
         for sub in sorted(all_subdomains):
             f.write(sub + "\n")
@@ -115,5 +132,4 @@ def enum(domain):
 
     print(f"[+] Total live subdomains: {len(totalLive)}\n")
 
-
-enum("dell.com")
+    save_subdomains(domain, all_subdomains, totalLive)

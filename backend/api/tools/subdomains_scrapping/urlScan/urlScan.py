@@ -8,7 +8,7 @@ with open('/work/backend/.config/provider.yaml') as file:
 URLSCAN = data['UrlScan']
 KEY = URLSCAN['apiKey']
 SUBDOMAINS_LINK = URLSCAN['linkToGetSubdomains']
-def scarp(domain):
+def scrap(domain):
 
   headers = {"Authintication": KEY}
   url = SUBDOMAINS_LINK
