@@ -6,7 +6,6 @@ services:
     container_name: automator-backend
     ports:
      - "8000:8000"
-    hostname: automator
     volumes:
       # Mount current directory to workspace
       - .:/work
@@ -18,11 +17,24 @@ services:
     working_dir: /work
     stdin_open: true
     tty: true
-    network_mode: "host"
     cap_add:
       - NET_ADMIN
       - NET_RAW
     restart: unless-stopped
+
+  redis:
+    image: redis:latest
+    container_name: redis
+
+  celery:
+    container_name: celery
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    command: celery -A api worker -l INFO
+    depends_on:
+      - redis
+
 
 volumes:
   automator-history:
