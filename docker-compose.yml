@@ -27,15 +27,23 @@ services:
     container_name: redis
 
   celery:
-    container_name: celery
     build:
       context: backend
       dockerfile: Dockerfile
+    container_name: celery
     command: celery -A api worker -l INFO
+    volumes:
+      - .:/work
+      - automator-history:/root
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONPATH=/work/backend
+      - TERM=xterm-256color
+    working_dir: /work
     depends_on:
       - redis
+      - automator
 
 
 volumes:
   automator-history:
-
