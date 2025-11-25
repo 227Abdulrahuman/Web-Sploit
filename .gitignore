@@ -1,6 +1,5 @@
 __pycache__/
 backend/api/tools/results/*
-*.sqlite3
 
 # Logs
 logs
@@ -26,3 +25,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
