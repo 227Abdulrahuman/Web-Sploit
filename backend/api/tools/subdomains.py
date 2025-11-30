@@ -12,8 +12,6 @@ django.setup()
 from backend.api.tools.subdomains_scrapping.virusTotal.virusTotal import scrap as virustotal_scrap
 from backend.api.tools.subdomains_scrapping.chaos.chaos import scrap as chaos_scrap
 from backend.api.tools.subdomains_scrapping.crtsh.crtsh import scrap as crtsh_scrap
-
-
 #Import the Modes.
 from backend.core.models import Subdomain, Domain
 
