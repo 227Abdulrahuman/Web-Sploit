@@ -4,6 +4,7 @@ from . import models
 
 admin.site.register(models.Domain)
 admin.site.register(models.Company)
+admin.site.register(models.Port)
 
 @admin.register(models.Subdomain)
 class SubdomainAdmin(admin.ModelAdmin):
