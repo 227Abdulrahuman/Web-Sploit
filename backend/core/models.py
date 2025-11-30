@@ -30,7 +30,13 @@ class Subdomain(models.Model):
         return self.hostname
 
 
+class Port(models.Model):
+    subdomain = models.ForeignKey(Subdomain, on_delete=models.CASCADE, related_name="ports")
+    port_number = models.IntegerField()
 
+    class Meta:
+        unique_together = ("subdomain", "port_number")
 
-
+    def __str__(self):
+        return f"{self.subdomain}:{self.port_number}"
 

@@ -13,7 +13,7 @@ from backend.api.tools.subdomains_scrapping.virusTotal.virusTotal import scrap a
 from backend.api.tools.subdomains_scrapping.chaos.chaos import scrap as chaos_scrap
 from backend.api.tools.subdomains_scrapping.crtsh.crtsh import scrap as crtsh_scrap
 #Import the Modes.
-from backend.core.models import Subdomain, Domain
+from backend.core.models import Subdomain, Domain, Port
 
 def run_scraper(name, func, domain,scrapers_dir):
     try:
@@ -34,6 +34,7 @@ def run_scraper(name, func, domain,scrapers_dir):
     except Exception as e:
         print(f"[Error] {name}: {e}")
 
+# Takes a domain and scarps the subdomains into passive.txt and the live ones into live.txt and inserts them to the database.
 def passive_enum(domain):
     # Creating the output directory.
     base_dir = f"/work/backend/api/tools/output/{domain}"
@@ -84,6 +85,9 @@ def passive_enum(domain):
             defaults={"is_alive": is_alive},
         )
 
+    print(f"[+] Found {len(live_subdomains)} live subdomains.")
+
+#Takes a domain and resolves cnames and ips into the database Depends on passive_enum.
 def dns_enum(domain):
     domain_obj = Domain.objects.get(hostname=domain)
 
@@ -97,6 +101,7 @@ def dns_enum(domain):
         '-j', '-o', output_file
     ]
 
+    print(f"[+] Starting DNS scan for {domain}")
     subprocess.run(cmd, text=True, capture_output=True)
 
     with open(output_file, 'r') as file:
@@ -108,7 +113,6 @@ def dns_enum(domain):
 
             try:
                 data = json.loads(line)
-                print(f"{data.get('host')} : {data.get('a')} : {data.get('cname')}")
                 Subdomain.objects.update_or_create(
                     domain=domain_obj,
                     hostname=data.get('host'),
@@ -118,7 +122,40 @@ def dns_enum(domain):
                         "ip": data.get('a')[0] if data.get('a') else None,
                     }
                 )
-
-
             except Exception:
                 pass
+    print(f"Finished DNS scan for {domain}")
+
+#Takes a domain an scan fro ports and saves it to ports.json Depends on passive_enum.
+def ports_enum(domain):
+    output_file = f"/work/backend/api/tools/output/{domain}/ports.json"
+    live_file = f"/work/backend/api/tools/output/{domain}/live.txt"
+
+    cmd = [
+        'naabu', '-l', live_file,
+        '-nc', '-silent',
+        '-j', '-o', output_file,
+    ]
+
+    subprocess.run(cmd, text=True, capture_output=True)
+
+    with open(output_file, 'r') as file:
+        for line in file:
+            line = line.strip()
+
+            if not line:
+                continue
+            try:
+                data = json.loads(line)
+                host = data.get('host')
+                port = data.get('port')
+
+                subdomain_obj = Subdomain.objects.get(hostname=host)
+                Port.objects.update_or_create(
+                    subdomain=subdomain_obj,
+                    port_number=int(port),
+                )
+            except Exception:
+                pass
+
+ports_enum("jobs.ch")

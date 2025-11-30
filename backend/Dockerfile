@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y \
     curl \
     wget \
     build-essential \
+    nmap \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -59,10 +60,9 @@ RUN pip3 install --no-cache-dir --break-system-packages -r requirements.txt
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1 
-
+ENV PYTHONPATH=/work
 
 EXPOSE 8000
 
-RUN go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest
 
 CMD ["python3", "backend/manage.py", "runserver", "0.0.0.0:8000"]
