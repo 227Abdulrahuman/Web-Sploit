@@ -20,6 +20,8 @@ class Subdomain(models.Model):
     domain = models.ForeignKey(Domain, on_delete=models.CASCADE, related_name="subdomains")
     is_alive = models.BooleanField(default=False)
     hostname = models.CharField(max_length=1000)
+    cname = models.CharField(max_length=1000, null=True, blank=True)
+    ip = models.CharField(max_length=1000, null=True, blank=True)
 
     class Meta:
         unique_together = ("domain", "hostname")

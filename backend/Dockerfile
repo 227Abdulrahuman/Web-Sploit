@@ -63,6 +63,6 @@ ENV PYTHONUNBUFFERED=1
 
 EXPOSE 8000
 
-
+RUN go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest
 
 CMD ["python3", "backend/manage.py", "runserver", "0.0.0.0:8000"]
