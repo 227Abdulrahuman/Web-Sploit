@@ -1,4 +1,4 @@
-import os,sys
+import os,sys, json
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import subprocess
 sys.path.insert(0, "/work")
@@ -85,3 +85,42 @@ def passive_enum(domain):
             hostname=sub,
             defaults={"is_alive": is_alive},
         )
+
+def dns_enum(domain):
+    domain_obj = Domain.objects.get(hostname=domain)
+
+    #Get the cnames and IPs from DNSX.
+    output_file = f"/work/backend/api/tools/output/{domain}/dns.json"
+    live_file = f"/work/backend/api/tools/output/{domain}/live.txt"
+    cmd = [
+        'dnsx', '-l', live_file,
+        '-a', '-cname',
+        '-silent', '-nc', '-resp',
+        '-j', '-o', output_file
+    ]
+
+    subprocess.run(cmd, text=True, capture_output=True)
+
+    with open(output_file, 'r') as file:
+        for line in file:
+            line = line.strip()
+
+            if not line:
+                continue
+
+            try:
+                data = json.loads(line)
+                print(f"{data.get('host')} : {data.get('a')} : {data.get('cname')}")
+                Subdomain.objects.update_or_create(
+                    domain=domain_obj,
+                    hostname=data.get('host'),
+                    defaults={
+                        "is_alive": True,
+                        "cname": data.get('cname')[-1] if data.get('cname') else None,
+                        "ip": data.get('a')[0] if data.get('a') else None,
+                    }
+                )
+
+
+            except Exception:
+                pass
