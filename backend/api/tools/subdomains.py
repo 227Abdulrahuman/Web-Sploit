@@ -1,120 +1,87 @@
-import sys
-import os
-from pathlib import Path
+import os,sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import subprocess
-from django.conf import settings
-from api.tools.subdomains_scrapping.chaos.chaos import scrap as chaosScrap
+sys.path.insert(0, "/work")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.api.settings")
+
+#Intialize the Django.
+import django
+django.setup()
+
+#Import the scrapers.
+from backend.api.tools.subdomains_scrapping.virusTotal.virusTotal import scrap as virustotal_scrap
+from backend.api.tools.subdomains_scrapping.chaos.chaos import scrap as chaos_scrap
+from backend.api.tools.subdomains_scrapping.crtsh.crtsh import scrap as crtsh_scrap
 
 
-def run_scraper(name, func, domain, output_dir):
+#Import the Modes.
+from backend.core.models import Subdomain, Domain
+
+def run_scraper(name, func, domain,scrapers_dir):
     try:
         result = func(domain)
 
         if result == {-1}:
             print(f"[-] {name} key expired.")
-            return (name, 0, [])
+            return
 
-        filepath = os.path.join(output_dir, f"{name}.txt")
-        with open(filepath, "w") as f:
-            for sub in result:
-                f.write(sub + "\n")
+        with open(f"{scrapers_dir}/{name}.txt", "w") as f:
+            for subdomain in result:
+                subdomain = subdomain.strip()
+                if subdomain.endswith(f".{domain}"):
+                    f.write(f"{subdomain}\n")
 
-        count = len(result)
-        print(f"[+] {name} found {count} subdomains.")
-
-        return (name, count, result)
+        print(f"[+] {name}: {len(result)} subdomains.")
 
     except Exception as e:
-        print(f"[ERROR] {name}: {e}")
-        return (name, 0, [])
-
-
-def save_subdomains(base_domain, subs, live):
-    from core.models import Domain, Subdomain
-
-    try:
-        domain = Domain.objects.get(hostname=base_domain)
-
-        for hostname in subs:
-            is_alive = hostname in live
-
-            try:
-                Subdomain.objects.update_or_create(
-                    domain=domain,
-                    hostname=hostname,
-                    defaults={"is_alive": is_alive}
-                )
-            except Exception as e:
-                print(f"[INNER DB ERROR] Failed to save {hostname}: {e}")
-
-    except Domain.DoesNotExist:
-        print(f"[ERROR] Domain {base_domain} not found in database.")
-    except Exception as e:
-        print(f"[CRITICAL SAVE ERROR] Global failure for {base_domain}: {e}")
+        print(f"[Error] {name}: {e}")
 
 def passive_enum(domain):
-    base_tools_dir = os.path.join(settings.BASE_DIR, 'api', 'tools')
+    # Creating the output directory.
+    base_dir = f"/work/backend/api/tools/output/{domain}"
+    scrapers_dir = f"{base_dir}/scrapers"
+    os.makedirs(scrapers_dir, exist_ok=True)
 
-    output_root = os.path.join(base_tools_dir, 'output', domain)
-    output_dir = os.path.join(output_root, 'scrapers')
-
-    passive_file = os.path.join(output_root, 'passive.txt')
-    live_file = os.path.join(output_root, 'live.txt')
-    resolvers_file = os.path.join(base_tools_dir, 'data', 'resolvers.txt')
-    puredns_bin = os.path.join(base_tools_dir, 'bin', 'puredns')
-
-
-    p = Path(output_dir)
-    p.mkdir(parents=True, exist_ok=True)
-
+    #Run Scrapers in parallel.
     scrapers = [
-        ("chaos", chaosScrap),
+        ("Chaos", chaos_scrap),
+        ("Crtsh", crtsh_scrap),
+        ("VirusTotal", virustotal_scrap),
     ]
-
-    print(f"[+] Starting Passive Enumeration for {domain}\n")
-
-    results = {}
-    all_subdomains = set()
-
     with ThreadPoolExecutor(max_workers=len(scrapers)) as executor:
         futures = {
-            executor.submit(run_scraper, name, func, domain, output_dir): name
+            executor.submit(run_scraper, name, func, domain,scrapers_dir): name
             for name, func in scrapers
         }
 
-        for future in as_completed(futures):
-            name, count, subs = future.result()
-            results[name] = count
-            all_subdomains.update(subs)
+    #Save the results into passive.txt
+    cmd = f"cat /work/backend/api/tools/output/{domain}/scrapers/*.txt | sort | uniq > /work/backend/api/tools/output/{domain}/passive.txt"
+    subprocess.run(cmd, shell=True, check=True)
 
-    # Write passive file
-    with open(passive_file, "w") as f:
-        for sub in sorted(all_subdomains):
-            f.write(sub + "\n")
+    #Resolve the live domains into live.txt
+    passive_file = f"/work/backend/api/tools/output/{domain}/passive.txt"
+    resolvers_file = f"/work/backend/api/tools/data/resolvers.txt"
+    live_file = f"/work/backend/api/tools/output/{domain}/live.txt"
+    cmd = ['puredns', 'resolve', passive_file, '-r', resolvers_file, '-w', live_file]
+    subprocess.run(cmd, text=True, capture_output=True)
 
-    # Resolve subdomains using puredns
-    cmd = [puredns_bin, 'resolve', passive_file, '-r', resolvers_file, '-w', live_file]
+    #Sort and Uniq on live.txt
+    with open(live_file) as f:
+        lines = sorted(set(line.strip() for line in f if line.strip()))
+    with open(live_file, "w") as f:
+        for line in lines:
+            f.write(line + "\n")
 
-    try:
-        subprocess.run(cmd, text=True, capture_output=True, check=True)
-    except FileNotFoundError:
-        print(f"[ERROR] Could not find puredns at {puredns_bin}. Ensure it's compiled and executable.")
-    except subprocess.CalledProcessError as e:
-        print(f"[ERROR] Puredns failed for {domain}: {e.stderr}")
-
-    totalLive = set()
-    if os.path.exists(live_file):
-        with open(live_file, "r") as f:
-            for line in f:
-                sub = line.strip()
-                if sub.endswith(f".{domain}") or sub == domain:
-                    totalLive.add(sub)
-
-        with open(live_file, "w") as f:
-            for sub in sorted(totalLive):
-                f.write(sub + "\n")
-
-    print(f"[+] Total live subdomains: {len(totalLive)}\n")
-
-    save_subdomains(domain, all_subdomains, totalLive)
+    #Insert the results into the database
+    with open(passive_file) as f:
+        passive_subdomains = set(line.strip() for line in f if line.strip())
+    with open(live_file) as f:
+        live_subdomains = set(line.strip() for line in f if line.strip())
+    domain_obj = Domain.objects.get(hostname=domain)
+    for sub in passive_subdomains:
+        is_alive = sub in live_subdomains
+        Subdomain.objects.update_or_create(
+            domain=domain_obj,
+            hostname=sub,
+            defaults={"is_alive": is_alive},
+        )
