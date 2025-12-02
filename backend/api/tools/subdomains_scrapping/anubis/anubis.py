@@ -8,7 +8,9 @@ def scrap(domain):
         subdomains = set()
         
         for sub in response:
-            subdomains.add(sub)
+            sub = sub.strip()
+            if sub.endswith(f".{domain}"):
+             subdomains.add(sub)
             
         return subdomains
     except Exception:

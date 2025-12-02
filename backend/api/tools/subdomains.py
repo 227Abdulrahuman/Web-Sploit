@@ -9,9 +9,21 @@ import django
 django.setup()
 
 #Import the scrapers.
-from backend.api.tools.subdomains_scrapping.virusTotal.virusTotal import scrap as virustotal_scrap
+from backend.api.tools.subdomains_scrapping.alienVault.alienVault import scrap as alienvault_scrap
+from backend.api.tools.subdomains_scrapping.anubis.anubis import scrap as anubis_scrap
+from backend.api.tools.subdomains_scrapping.bevigil.bevigil import scrap as bevigil_scrap #Bad Scraper.
+from backend.api.tools.subdomains_scrapping.c99.c99 import scrap as c99_scrap
+from backend.api.tools.subdomains_scrapping.certspotter.certspotter import scrap as certspotter_scrap
 from backend.api.tools.subdomains_scrapping.chaos.chaos import scrap as chaos_scrap
 from backend.api.tools.subdomains_scrapping.crtsh.crtsh import scrap as crtsh_scrap
+from backend.api.tools.subdomains_scrapping.dnsDumpster.dnsDumpster import scrap as dnsDumpster_scrap
+from backend.api.tools.subdomains_scrapping.fullHunt.fullHunt import scrap as fullHunt_scrap
+from backend.api.tools.subdomains_scrapping.leakix.leakix import scrap as leakix_scrap
+from backend.api.tools.subdomains_scrapping.netlas.netlas import scrap as netlas_scrap
+from backend.api.tools.subdomains_scrapping.pugRecon.pugRecon import scrap as pugRecon_scrap
+from backend.api.tools.subdomains_scrapping.securityTrails.securityTrails import scrap as securityTrails_scrap
+from backend.api.tools.subdomains_scrapping.shodan.shodan import scrap as shodan_scrap
+from backend.api.tools.subdomains_scrapping.virusTotal.virusTotal import scrap as virusTotal_scrap
 #Import the Modes.
 from backend.core.models import Subdomain, Domain, Port
 
@@ -43,9 +55,22 @@ def passive_enum(domain):
 
     #Run Scrapers in parallel.
     scrapers = [
+        ("AlienVault", alienvault_scrap),
+        ("Anubis", anubis_scrap),
+        ("Bevigil", bevigil_scrap),
+        ("C99", c99_scrap),
+        ("Certspotter", certspotter_scrap),
         ("Chaos", chaos_scrap),
         ("Crtsh", crtsh_scrap),
-        ("VirusTotal", virustotal_scrap),
+        ("DnsDumpster", dnsDumpster_scrap),
+        ("FullHunt", fullHunt_scrap),
+        ("LeakiX", leakix_scrap),
+        ("Netlas", netlas_scrap),
+        ("PugRecon", pugRecon_scrap),
+        ("SecurityTrails", securityTrails_scrap),
+        ("Shodan", shodan_scrap),
+        ("VirusTotal", virusTotal_scrap),
+
     ]
     with ThreadPoolExecutor(max_workers=len(scrapers)) as executor:
         futures = {
@@ -157,5 +182,3 @@ def ports_enum(domain):
                 )
             except Exception:
                 pass
-
-ports_enum("jobs.ch")

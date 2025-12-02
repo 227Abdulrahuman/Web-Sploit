@@ -22,7 +22,10 @@ def scrap(domain):
         response = response.json()
 
         for entry in response["passive_dns"]:
-            subdomains.add(entry["hostname"])
+            s = entry["hostname"]
+            s = s.strip()
+            if s.endswith(f".{domain}"):
+             subdomains.add(s)
 
         return subdomains
 

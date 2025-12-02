@@ -2,6 +2,7 @@
 FROM ubuntu:24.04
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONUNBUFFERED=1
+ENV PYTHONPATH=/work
 
 
 # Install base dependencies
@@ -60,7 +61,6 @@ RUN pip3 install --no-cache-dir --break-system-packages -r requirements.txt
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1 
-ENV PYTHONPATH=/work
 
 EXPOSE 8000
 
