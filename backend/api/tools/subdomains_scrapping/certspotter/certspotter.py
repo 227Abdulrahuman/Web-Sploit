@@ -23,7 +23,8 @@ def scrap(domain):
 
         for cert in response:
             for sub in cert["dns_names"]:
-                if sub.endswith(domain):
+                sub = sub.strip()
+                if sub.endswith(f".{domain}"):
                     if sub[0] == '*' and sub[1] == '.':
                         sub = sub[2:]
                     subdomains.add(sub)
@@ -33,4 +34,3 @@ def scrap(domain):
 
     except Exception:
         return set()
-

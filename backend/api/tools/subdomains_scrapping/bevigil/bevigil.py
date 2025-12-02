@@ -20,7 +20,9 @@ def scrap(domain):
         response = response.json()
 
         for sub in response["subdomains"]:
-            subdomains.add(sub)
+            sub = sub.strip()
+            if sub.endswith(f".{domain}"):
+                subdomains.add(sub)
         return subdomains
     except Exception:
         return set()

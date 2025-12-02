@@ -1,25 +1,36 @@
 import requests
+import json
+
 
 def scrap(domain):
     url = f"https://crt.sh/?q=%.{domain}&output=json"
+    headers = {
+        "User-Agent": "Mozilla/5.0"
+    }
+
     try:
-        req = requests.get(url)
-        req = req.json()
+        r = requests.get(url, headers=headers, timeout=15)
+
+        if r.status_code != 200:
+            return {-1}
+
+        try:
+            data = json.loads(r.text)
+        except json.JSONDecodeError:
+            return {-1}
 
         subdomains = set()
 
-        for field in req:
-            cn = field['common_name']
-            if cn.endswith(f".{domain}"):
-                if cn[0] == '*' and cn[1] == '.':
-                    cn = cn[2:]
-                subdomains.add(cn)
+        for entry in data:
+            name = entry.get("name_value")
+            if name:
+                for line in name.split("\n"):
+                    line = line.strip()
+                    if line.endswith(f".{domain}"):
+                        subdomains.add(line)
 
-            name_value = field['name_value']
-            if name_value.endswith(f".{domain}"):
-                if name_value[0] == '*' and name_value[1] == '.':
-                    name_value = cn[2:]
-                subdomains.add(name_value)
-        return subdomains
-    except Exception:
-        return set()
+        return sorted(subdomains)
+
+    except Exception as e:
+        return {-1}
+

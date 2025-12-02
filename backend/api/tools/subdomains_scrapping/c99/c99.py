@@ -26,7 +26,9 @@ def scrap(domain, days_back = 30) :
 
                 if domain in href:
                     clean = href.lstrip("/").lstrip("/")
-                    subdomains.add(clean)
+                    clean = clean.strip()
+                    if clean.endswith(f".{domain}"):
+                        subdomains.add(clean)
 
             if subdomains:
                 return subdomains
@@ -35,6 +37,4 @@ def scrap(domain, days_back = 30) :
             continue
 
     return subdomains
-
-
 

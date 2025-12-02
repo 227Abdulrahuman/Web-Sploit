@@ -47,7 +47,7 @@ AlienVault:
   linkToGetSubdomains: "https://otx.alienvault.com/api/v1/indicators/domain/{domain}/passive_dns"
 
 bevigil:
-  apiKey: "BDlbCeexND9CK2X5"
+  apiKey: "hGn7PGadnue61TMt"
   linkToGetAPIKey: "https://bevigil.com/osint/api-keys"
   websiteLink: "https://bevigil.com/"
   linkToGetSubdomains: "https://osint.bevigil.com/api/{domain}/subdomains/"

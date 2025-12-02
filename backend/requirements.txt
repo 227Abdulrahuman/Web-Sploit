@@ -6,3 +6,4 @@ django-ninja
 bs4
 celery
 redis
+psycopg2-binary

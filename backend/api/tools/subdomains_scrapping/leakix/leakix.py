@@ -21,4 +21,3 @@ def scrap(domain):
         subdomains.add(item["subdomain"])
 
     return subdomains
-
