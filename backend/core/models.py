@@ -40,3 +40,14 @@ class Port(models.Model):
     def __str__(self):
         return f"{self.subdomain}:{self.port_number}"
 
+class HTTPX(models.Model):
+    subdomain = models.ForeignKey(Subdomain, on_delete=models.CASCADE, related_name="httpx")
+    status_code = models.IntegerField(null=True, blank=True)
+    url = models.CharField(max_length=1000000,null=True, blank=True)
+    content_length = models.IntegerField(null=True, blank=True)
+    tech = models.JSONField(default=list,null=True, blank=True)
+    location = models.CharField(max_length=1000000,null=True, blank=True)
+    title = models.CharField(max_length=1000000,null=True, blank=True)
+
+    class Meta:
+        unique_together = ("subdomain", "url")
