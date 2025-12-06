@@ -1,5 +1,7 @@
 __pycache__/
-backend/api/tools/results/*
+backend/api/tools/output/*
+backend/api/tools/data/cookie.txt
+
 *.sqlite3
 
 # Logs
@@ -26,5 +28,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
 
 
