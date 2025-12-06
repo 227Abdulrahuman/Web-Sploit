@@ -25,7 +25,7 @@ from backend.api.tools.subdomains_scrapping.securityTrails.securityTrails import
 from backend.api.tools.subdomains_scrapping.shodan.shodan import scrap as shodan_scrap
 from backend.api.tools.subdomains_scrapping.virusTotal.virusTotal import scrap as virusTotal_scrap
 #Import the Modes.
-from backend.core.models import Subdomain, Domain, Port
+from backend.core.models import Subdomain, Domain, Port, HTTPX
 
 def run_scraper(name, func, domain,scrapers_dir):
     try:
@@ -151,7 +151,7 @@ def dns_enum(domain):
                 pass
     print(f"Finished DNS scan for {domain}")
 
-#Takes a domain an scan fro ports and saves it to ports.json Depends on passive_enum.
+#Takes a domain an scan for ports and saves it to ports.json Depends on passive_enum.
 def ports_enum(domain):
     output_file = f"/work/backend/api/tools/output/{domain}/ports.json"
     live_file = f"/work/backend/api/tools/output/{domain}/live.txt"
@@ -182,3 +182,51 @@ def ports_enum(domain):
                 )
             except Exception:
                 pass
+
+#Takes a domain and runs httpx on it and saves to http.json depends on passive_enum.
+def http_enum(domain):
+    output_file = f"/work/backend/api/tools/output/{domain}/http.json"
+    live_file = f"/work/backend/api/tools/output/{domain}/live.txt"
+
+    print(f"[+] Starting Web Fingerprinting for {domain}")
+
+    cmd = [
+        'httpx', '-l', live_file,
+        '-nc', '-silent',
+        '-sc', '-title', '-location',
+        '-j', '-o', output_file,
+    ]
+    subprocess.run(cmd, text=True, capture_output=True)
+
+    with open(output_file, 'r') as file:
+        for line in file:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                data = json.loads(line)
+
+                url = data.get('url')
+                host_name = data.get('input')
+                status_code = data.get('status_code')
+                content_length = data.get('content_length')
+                tech = data.get('tech')
+                title = data.get('title')
+                location = data.get('location')
+
+                subdomain_obj = Subdomain.objects.get(hostname=host_name)
+                HTTPX.objects.update_or_create(
+                    subdomain=subdomain_obj,
+                    url=url,
+                    defaults={
+                        "status_code": status_code,
+                        "content_length": content_length,
+                        "tech": tech,
+                        "title": title,
+                        "location": location,
+                    }
+                )
+            except Exception:
+                pass
+
+    print(f"[+] Done Web Fingerprinting for {domain}")
