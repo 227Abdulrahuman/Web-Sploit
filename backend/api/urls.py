@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from ninja import NinjaAPI
-# from backend.api.tasks import enum
+from backend.api.tasks import enum
 from backend.core.models import *
 from ninja.responses import Response
 
@@ -9,6 +9,7 @@ api = NinjaAPI()
 
 @api.get("addCompany")
 def add_company(request, company_name:str):
+    company_name = company_name.lower()
     if Company.objects.filter(name=company_name).exists():
         return Response({"error":"Company already exists"}, status=400)
     else:
@@ -18,6 +19,7 @@ def add_company(request, company_name:str):
 @api.get("addDomain")
 def add_domain(request, domain_name:str, company_name:str):
     domain_name = domain_name.lower()
+    company_name = company_name.lower()
     if Domain.objects.filter(hostname=domain_name).exists():
         return Response({"error":"Domain already exists"}, status=400)
     else:
@@ -26,11 +28,10 @@ def add_domain(request, domain_name:str, company_name:str):
         return Response({"status":"success"}, status=201)
 
 
-
-# @api.get("recon")
-# def start_passive_enum(request, domain:str):
-#     enum.delay(domain)
-#     return {"result": f"passive enum for {domain} task started" }
+@api.get("recon")
+def start_passive_enum(request, domain:str):
+    enum.delay(domain)
+    return {"result": f"Started basic recon for {domain}" }
 
 
 urlpatterns = [

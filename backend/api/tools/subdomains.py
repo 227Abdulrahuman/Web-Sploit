@@ -156,6 +156,8 @@ def ports_enum(domain):
     output_file = f"/work/backend/api/tools/output/{domain}/ports.json"
     live_file = f"/work/backend/api/tools/output/{domain}/live.txt"
 
+    print(f"[+] Starting ports scan for {domain}")
+
     cmd = [
         'naabu', '-l', live_file,
         '-nc', '-silent',
@@ -182,6 +184,7 @@ def ports_enum(domain):
                 )
             except Exception:
                 pass
+    print(f"Finished ports scan for {domain}")
 
 #Takes a domain and runs httpx on it and saves to http.json depends on passive_enum.
 def http_enum(domain):
