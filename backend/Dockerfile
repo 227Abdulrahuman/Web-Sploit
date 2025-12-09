@@ -63,6 +63,8 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1 
 
 EXPOSE 8000
-
+RUN go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest
+RUN go install github.com/ffuf/ffuf/v2@latest
 
 CMD ["python3", "backend/manage.py", "runserver", "0.0.0.0:8000"]
+
